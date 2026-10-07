@@ -42,7 +42,12 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "UTC"
-CELERY_BEAT_SCHEDULE: dict = {}
+CELERY_BEAT_SCHEDULE = {
+    "expire_loads": {
+        "task": "apps.loads.tasks.expire_loads",
+        "schedule": datetime.timedelta(minutes=10),
+    },
+}
 
 # Custom User Model
 AUTH_USER_MODEL = "accounts.User"
