@@ -147,7 +147,7 @@ def verify_otp(phone: str, code: str) -> dict[str, Any]:
             user.set_unusable_password()
             user.save(update_fields=["password", "updated_at"])
 
-        if user.status == User.Status.BLOCKED:
+        if user.status == User.Status.BLOCKED or not user.is_active:
             raise ServiceError(
                 detail="User account is blocked.",
                 code="account_blocked",

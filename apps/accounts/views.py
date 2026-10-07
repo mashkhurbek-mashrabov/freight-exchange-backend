@@ -13,6 +13,7 @@ from apps.accounts import services
 from apps.accounts.models import Company
 from apps.accounts.serializers import (
     CompanySerializer,
+    CustomTokenRefreshSerializer,
     DeviceSerializer,
     LogoutSerializer,
     OtpRequestSerializer,
@@ -110,6 +111,7 @@ class TokenRefreshCustomView(TokenRefreshView):
     """Endpoint to refresh access token using refresh token."""
 
     permission_classes = [AllowAny]
+    serializer_class = CustomTokenRefreshSerializer
 
 
 @extend_schema(
