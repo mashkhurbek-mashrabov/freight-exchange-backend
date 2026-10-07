@@ -66,6 +66,18 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
 
     response = drf_exception_handler(exc, context)
     if response is not None:
+        if isinstance(exc, exceptions.Throttled):
+            detail = (
+                str(exc.detail)
+                if hasattr(exc, "detail")
+                else "Request was throttled."
+            )
+            response.data = {
+                "detail": detail,
+                "code": "throttled",
+            }
+            return response
+
         if isinstance(exc, exceptions.ValidationError):
             response.data = {
                 "detail": "Validation error.",
