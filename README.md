@@ -140,16 +140,36 @@ flowchart LR
 
 ## Phase Status
 
-- [ ] Phase 0: Repo, skeleton, Docker, Swagger *(In Progress)*
-- [ ] Phase 1: Accounts and OTP auth
-- [ ] Phase 2: Reference data
-- [ ] Phase 3: Garage
-- [ ] Phase 4: Loads and routes
-- [ ] Phase 5: Offers
-- [ ] Phase 6: Orders and ratings
-- [ ] Phase 7: Notifications and Celery jobs
-- [ ] Phase 8: Seed data, hardening, CI, docs
+- [x] Phase 0: Repo, skeleton, Docker, Swagger
+- [x] Phase 1: Accounts and OTP auth
+- [x] Phase 2: Reference data
+- [x] Phase 3: Garage
+- [x] Phase 4: Loads and routes
+- [x] Phase 5: Offers
+- [x] Phase 6: Orders and ratings
+- [x] Phase 7: Notifications and Celery jobs
+- [x] Phase 8: Seed data, hardening, CI, docs
+
+Plan-to-code mapping: see [docs/PLAN_COVERAGE.md](docs/PLAN_COVERAGE.md).
 
 ## Decisions
 
-- <!-- Decisions will be documented here by team members -->
+Ambiguities in `plan.md` resolved with the simplest option that passes the acceptance checks:
+
+- **Tests need PostgreSQL** (Rating.reasons is an `ArrayField`). Tests run with `config.settings.test`
+  (LocMem cache, eager Celery, fast hashers); counters/rate limits use Django's cache API, not redis-py.
+- **Load list "city".** Route points have only `address` and `country`; list items expose
+  `origin`/`destination` as `{country, address}` (lowest-seq loading point, highest-seq unloading point).
+- **Reference endpoints** (`/countries`, `/currencies`, `/vehicle-types`, `/exchange-rates`) are not
+  paginated (small lists), cached 1 hour, cache invalidated on admin save/delete.
+- **`/loads`** serves both `GET` (board of active loads) and `POST` (create draft) from one view.
+- **Offers.** An offer by a carrier uses `proposer=carrier, recipient=shipper`; a counter flips both and
+  marks the old row `countered`. Phone numbers are not exposed on offers, only on orders (parties only).
+- **Order cancel.** Requires `note` as the cancel reason; allowed from `created|received` only.
+- **Load completes** when the number of completed orders equals `trucks_needed`.
+- **OTP.** Code hashed with HMAC-SHA256 (key `SECRET_KEY`); `OTP_DEV_CODE` is accepted without a stored
+  code and is forced empty in `config.settings.prod`.
+- **Admin "Mark verified"** lives in `accounts.services.mark_verified` and sends `account_verified`.
+- **Beat** schedule is in `CELERY_BEAT_SCHEDULE` (no django-celery-beat DB scheduler).
+- **Throttling**: anon 60/min, user 600/min, stricter scopes on OTP endpoints.
+- **Uploads**: images <= 5 MB (jpeg/png/webp), documents <= 10 MB; validated in serializers.
