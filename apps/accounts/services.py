@@ -84,53 +84,60 @@ def verify_otp(phone: str, code: str) -> dict[str, Any]:
     dev_code = getattr(settings, "OTP_DEV_CODE", "")
     is_dev_code = bool(dev_code and code == dev_code)
 
-    with transaction.atomic():
-        if not is_dev_code:
-            otp = (
-                OtpCode.objects.select_for_update()
-                .filter(phone=normalized_phone, used_at__isnull=True)
-                .order_by("-created_at")
-                .first()
+    otp = None
+    if not is_dev_code:
+        otp = (
+            OtpCode.objects.filter(phone=normalized_phone, used_at__isnull=True)
+            .order_by("-created_at")
+            .first()
+        )
+        if not otp:
+            raise ServiceError(
+                detail="Invalid OTP code.",
+                code="otp_invalid",
+                status_code=400,
             )
-            if not otp:
-                raise ServiceError(
-                    detail="Invalid OTP code.",
-                    code="otp_invalid",
-                    status_code=400,
-                )
 
+        if otp.attempts >= 5:
+            raise ServiceError(
+                detail="Maximum OTP verification attempts exceeded.",
+                code="otp_attempts_exceeded",
+                status_code=400,
+            )
+
+        if otp.expires_at <= timezone.now():
+            raise ServiceError(
+                detail="OTP code has expired.",
+                code="otp_expired",
+                status_code=400,
+            )
+
+        expected_hash = hash_otp_code(code)
+        if not hmac.compare_digest(otp.code_hash, expected_hash):
+            otp.attempts += 1
+            otp.save(update_fields=["attempts", "updated_at"])
             if otp.attempts >= 5:
                 raise ServiceError(
                     detail="Maximum OTP verification attempts exceeded.",
                     code="otp_attempts_exceeded",
                     status_code=400,
                 )
+            raise ServiceError(
+                detail="Invalid OTP code.",
+                code="otp_invalid",
+                status_code=400,
+            )
 
-            if otp.expires_at <= timezone.now():
-                raise ServiceError(
-                    detail="OTP code has expired.",
-                    code="otp_expired",
-                    status_code=400,
-                )
-
-            expected_hash = hash_otp_code(code)
-            if not hmac.compare_digest(otp.code_hash, expected_hash):
-                otp.attempts += 1
-                otp.save(update_fields=["attempts", "updated_at"])
-                if otp.attempts >= 5:
-                    raise ServiceError(
-                        detail="Maximum OTP verification attempts exceeded.",
-                        code="otp_attempts_exceeded",
-                        status_code=400,
-                    )
-                raise ServiceError(
-                    detail="Invalid OTP code.",
-                    code="otp_invalid",
-                    status_code=400,
-                )
-
-            otp.used_at = timezone.now()
-            otp.save(update_fields=["used_at", "updated_at"])
+    with transaction.atomic():
+        if otp is not None:
+            otp = (
+                OtpCode.objects.select_for_update()
+                .filter(id=otp.id)
+                .first()
+            )
+            if otp:
+                otp.used_at = timezone.now()
+                otp.save(update_fields=["used_at", "updated_at"])
 
         user, is_new = User.objects.get_or_create(
             phone=normalized_phone,

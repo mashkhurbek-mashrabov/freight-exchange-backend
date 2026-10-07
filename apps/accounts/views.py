@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from apps.accounts import services
+from apps.accounts.models import Company
 from apps.accounts.serializers import (
     CompanySerializer,
     DeviceSerializer,
@@ -186,7 +187,14 @@ class MeCompanyView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request: Request) -> Response:
-        serializer = CompanySerializer(data=request.data)
+        instance = None
+        try:
+            if hasattr(request.user, "company"):
+                instance = request.user.company
+        except Company.DoesNotExist:
+            instance = None
+
+        serializer = CompanySerializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         company, _ = services.upsert_company(
             user=request.user,

@@ -80,7 +80,12 @@ class CompanySerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {
             "name": {"required": True},
-            "tin": {"required": False, "allow_null": True, "allow_blank": True},
+            "tin": {
+                "required": False,
+                "allow_null": True,
+                "allow_blank": True,
+                "validators": [],
+            },
             "address": {"required": False, "allow_blank": True},
         }
 
@@ -183,3 +188,6 @@ class DeviceSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+        extra_kwargs = {
+            "fcm_token": {"validators": []},
+        }
