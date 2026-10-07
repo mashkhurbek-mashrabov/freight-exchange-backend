@@ -105,7 +105,9 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
             response.data = {"detail": detail, "code": str(code)}
             return response
 
-        code = getattr(exc, "default_code", "error")
+        code = getattr(getattr(exc, "detail", None), "code", None) or getattr(
+            exc, "default_code", "error"
+        )
         detail_val = (
             response.data.get("detail", str(response.data))
             if isinstance(response.data, dict)

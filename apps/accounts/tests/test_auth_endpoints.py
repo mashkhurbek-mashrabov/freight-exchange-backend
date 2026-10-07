@@ -172,3 +172,21 @@ def test_logout_endpoint_blacklists_refresh_token(api_client: APIClient) -> None
         format="json",
     )
     assert refresh_res.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+@pytest.mark.django_db
+def test_authenticated_request_with_token_blocked_user_rejected(api_client: APIClient) -> None:
+    """Requests with access token of a blocked user are rejected with 401."""
+    user = UserFactory(phone="+998900000008")
+    refresh = RefreshToken.for_user(user)
+    access_token = str(refresh.access_token)
+
+    # Block user
+    user.status = User.Status.BLOCKED
+    user.save(update_fields=["status"])
+
+    api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
+    response = api_client.get("/api/v1/me")
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.data["code"] == "account_blocked"
+
