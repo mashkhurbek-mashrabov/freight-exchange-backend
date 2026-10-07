@@ -1,6 +1,7 @@
 """Unit tests for orders services."""
 
 from decimal import Decimal
+from typing import Any
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -16,7 +17,7 @@ from apps.core.exceptions import ServiceError
 from apps.loads.models import Load
 from apps.loads.tests.factories import LoadFactory
 from apps.notifications.models import Notification
-from apps.orders.models import Order
+from apps.orders.models import Order, Rating
 from apps.orders.services import add_document, change_status, rate_order
 from apps.orders.tests.factories import OrderFactory
 
@@ -471,3 +472,42 @@ def test_add_document_service() -> None:
         add_document(carrier, order.pk, uploaded, "")
     assert exc_info.value.status_code == 400
     assert exc_info.value.code == "validation_error"
+
+
+@pytest.mark.django_db
+def test_order_change_status_twice_returns_409() -> None:
+    """Submitting the same order status transition twice returns 409 invalid_transition."""
+    carrier = CarrierUserFactory(status=User.Status.VERIFIED)
+    shipper = ShipperUserFactory(status=User.Status.VERIFIED)
+    order = OrderFactory(carrier=carrier, shipper=shipper, status=Order.Status.CREATED)
+
+    # First transition to received succeeds
+    change_status(carrier, order.pk, Order.Status.RECEIVED)
+    order.refresh_from_db()
+    assert order.status == Order.Status.RECEIVED
+
+    # Second transition to received returns 409
+    with pytest.raises(ServiceError) as exc_info:
+        change_status(carrier, order.pk, Order.Status.RECEIVED)
+    assert exc_info.value.status_code == 409
+    assert exc_info.value.code == "invalid_transition"
+
+
+@pytest.mark.django_db
+def test_order_rate_twice_integrity_error_returns_409(monkeypatch: pytest.MonkeyPatch) -> None:
+    """If unique_order_rater triggers concurrently, 409 already_rated is returned."""
+    from django.db import IntegrityError
+
+    carrier = CarrierUserFactory(status=User.Status.VERIFIED)
+    shipper = ShipperUserFactory(status=User.Status.VERIFIED)
+    order = OrderFactory(carrier=carrier, shipper=shipper, status=Order.Status.COMPLETED)
+
+    def mock_create(*args: Any, **kwargs: Any) -> Any:
+        raise IntegrityError("duplicate key value violates unique constraint")
+
+    monkeypatch.setattr(Rating.objects, "create", mock_create)
+
+    with pytest.raises(ServiceError) as exc_info:
+        rate_order(carrier, order.pk, stars=5)
+    assert exc_info.value.status_code == 409
+    assert exc_info.value.code == "already_rated"

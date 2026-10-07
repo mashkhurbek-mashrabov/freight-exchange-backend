@@ -3,7 +3,7 @@
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
 
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -195,7 +195,11 @@ def change_status(
             completed_count = (
                 Order.objects.filter(load=load, status=Order.Status.COMPLETED).count()
             )
-            if not has_unsettled_orders and completed_count == load.trucks_needed:
+            if (
+                not has_unsettled_orders
+                and completed_count == load.trucks_needed
+                and load.trucks_found == load.trucks_needed
+            ):
                 load.status = Load.Status.COMPLETED
                 load.save(update_fields=["status", "updated_at"])
 
@@ -340,14 +344,21 @@ def rate_order(
 
         ratee = order.shipper if user.pk == order.carrier_id else order.carrier
 
-        rating = Rating.objects.create(
-            order=order,
-            rater=user,
-            ratee=ratee,
-            stars=stars,
-            reasons=reasons,
-            comment=comment or "",
-        )
+        try:
+            rating = Rating.objects.create(
+                order=order,
+                rater=user,
+                ratee=ratee,
+                stars=stars,
+                reasons=reasons,
+                comment=comment or "",
+            )
+        except IntegrityError as exc:
+            raise ServiceError(
+                detail="Order has already been rated by this user.",
+                code="already_rated",
+                status_code=409,
+            ) from exc
 
         # Recompute ratee company rating within the same transaction
         try:
