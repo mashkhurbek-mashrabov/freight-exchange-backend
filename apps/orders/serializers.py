@@ -1,11 +1,19 @@
-"""Serializers for orders app."""
-
+from drf_spectacular.settings import spectacular_settings
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from apps.accounts.models import User
 from apps.loads.models import Load, RoutePoint
 from apps.orders.models import Order, OrderDocument, OrderStatusEvent, Rating
+
+spectacular_settings.ENUM_NAME_OVERRIDES.setdefault(
+    "OrderStatusEnum",
+    "apps.orders.models.Order.Status",
+)
+spectacular_settings.ENUM_NAME_OVERRIDES.setdefault(
+    "UserStatusEnum",
+    "apps.accounts.models.User.Status",
+)
 
 
 class UserSummarySerializer(serializers.ModelSerializer):
@@ -60,6 +68,7 @@ class OrderLoadSummarySerializer(serializers.ModelSerializer):
 class OrderRoutePointSerializer(serializers.ModelSerializer):
     """Route point representation for orders."""
 
+    kind = serializers.CharField(read_only=True)
     country_code = serializers.CharField(source="country.code", read_only=True)
 
     class Meta:
