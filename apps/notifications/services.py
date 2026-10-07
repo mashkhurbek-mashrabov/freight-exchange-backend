@@ -29,7 +29,7 @@ def notify(
         type=type,
         payload=payload,
     )
-    transaction.on_commit(lambda: send_push.delay(notification.pk))
+    transaction.on_commit(lambda pk=notification.pk: send_push.delay(pk))
     return notification
 
 
