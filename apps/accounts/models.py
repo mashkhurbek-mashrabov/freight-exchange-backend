@@ -1,13 +1,16 @@
 """Accounts model definitions."""
 
+from decimal import Decimal
 from typing import Any
 
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
 )
 from django.db import models
+from django.utils import timezone
 
 from apps.core.models import BaseModel
 
@@ -101,3 +104,77 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     def __str__(self) -> str:
         """Return phone and display name or role."""
         return f"{self.phone} ({self.full_name or self.role})"
+
+
+class Company(BaseModel):
+    """Company associated with a user."""
+
+    owner = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="company",
+    )
+    name = models.CharField(max_length=255)
+    tin = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    address = models.TextField(blank=True, default="")
+    rating_avg = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        default=Decimal("0.00"),
+    )
+    rating_count = models.PositiveIntegerField(default=0)
+    verified_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
+        ordering = ["-id"]
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.tin or 'no TIN'})"
+
+
+class Device(BaseModel):
+    """Mobile device registered for push notifications."""
+
+    class Platform(models.TextChoices):
+        IOS = "ios", "iOS"
+        ANDROID = "android", "Android"
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="devices",
+    )
+    fcm_token = models.CharField(max_length=255, unique=True)
+    platform = models.CharField(max_length=20, choices=Platform.choices)
+    last_seen_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = "Device"
+        verbose_name_plural = "Devices"
+        ordering = ["-id"]
+
+    def __str__(self) -> str:
+        return f"{self.user_id} - {self.platform} ({self.fcm_token[:12]}...)"
+
+
+class OtpCode(BaseModel):
+    """One-time password hash record for phone authentication."""
+
+    phone = models.CharField(max_length=20)
+    code_hash = models.CharField(max_length=64)
+    attempts = models.PositiveIntegerField(default=0)
+    expires_at = models.DateTimeField()
+    used_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "OTP Code"
+        verbose_name_plural = "OTP Codes"
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["phone", "created_at"]),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.phone} (expires: {self.expires_at})"

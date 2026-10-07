@@ -84,7 +84,9 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
             return response
 
         if isinstance(exc, exceptions.PermissionDenied):
-            code = getattr(exc, "default_code", "permission_denied")
+            code = getattr(exc.detail, "code", None) or getattr(
+                exc, "default_code", "permission_denied"
+            )
             detail = (
                 str(exc.detail) if hasattr(exc, "detail") else "Permission denied."
             )
