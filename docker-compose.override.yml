@@ -1,0 +1,24 @@
+services:
+  web:
+    build:
+      args:
+        INSTALL_DEV: 1
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - media_data:/app/media
+
+  worker:
+    build:
+      args:
+        INSTALL_DEV: 1
+    volumes:
+      - .:/app
+      - media_data:/app/media
+
+  beat:
+    build:
+      args:
+        INSTALL_DEV: 1
+    volumes:
+      - .:/app
