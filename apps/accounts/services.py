@@ -253,5 +253,5 @@ def mark_verified(users) -> int:
     for user in targets:
         user.status = User.Status.VERIFIED
         user.save(update_fields=["status", "updated_at"])
-        notify(user, Notification.Type.ACCOUNT_VERIFIED, {})
+        notify(user, Notification.NotificationType.ACCOUNT_VERIFIED, {})
     return len(targets)
