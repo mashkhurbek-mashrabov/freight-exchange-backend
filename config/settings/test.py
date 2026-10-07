@@ -18,3 +18,15 @@ PASSWORD_HASHERS = [
 ]
 
 MEDIA_ROOT = tempfile.mkdtemp()
+
+REST_FRAMEWORK = {
+    **REST_FRAMEWORK,  # noqa: F405
+    "DEFAULT_THROTTLE_CLASSES": [],
+    "DEFAULT_THROTTLE_RATES": {
+        **REST_FRAMEWORK.get("DEFAULT_THROTTLE_RATES", {}),  # noqa: F405
+        "anon": "100000/min",
+        "user": "100000/min",
+        "otp": "100000/min",
+        "otp_verify": "100000/min",
+    },
+}

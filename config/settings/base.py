@@ -180,6 +180,16 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
     ],
     "EXCEPTION_HANDLER": "apps.core.exceptions.handler",
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": env("THROTTLE_ANON_RATE", default="60/min"),
+        "user": env("THROTTLE_USER_RATE", default="600/min"),
+        "otp": env("THROTTLE_OTP_RATE", default="10/min"),
+        "otp_verify": env("THROTTLE_OTP_VERIFY_RATE", default="20/min"),
+    },
 }
 
 # drf-spectacular

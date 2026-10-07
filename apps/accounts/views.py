@@ -23,6 +23,7 @@ from apps.accounts.serializers import (
     UserUpdateSerializer,
 )
 from apps.core.serializers import ErrorSerializer
+from apps.core.throttles import ScopedRateThrottle
 
 
 @extend_schema(
@@ -48,6 +49,8 @@ class OtpRequestView(APIView):
     """Endpoint to request an OTP code for login/registration."""
 
     permission_classes = [AllowAny]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "otp"
 
     def post(self, request: Request) -> Response:
         serializer = OtpRequestSerializer(data=request.data)
@@ -65,6 +68,7 @@ class OtpRequestView(APIView):
         200: OtpVerifyResponseSerializer,
         400: ErrorSerializer,
         403: ErrorSerializer,
+        429: ErrorSerializer,
     },
     examples=[
         OpenApiExample(
@@ -79,6 +83,8 @@ class OtpVerifyView(APIView):
     """Endpoint to verify OTP code and obtain JWT authentication tokens."""
 
     permission_classes = [AllowAny]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "otp_verify"
 
     def post(self, request: Request) -> Response:
         serializer = OtpVerifySerializer(data=request.data)
