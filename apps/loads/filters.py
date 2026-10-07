@@ -14,9 +14,9 @@ from apps.offers.models import Offer
 class CommaSeparatedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
     """Multiple choice field accepting both comma-separated and repeated values."""
 
-    def to_python(self, value: Any) -> Any:
+    def clean(self, value: Any) -> Any:
         if not value:
-            return []
+            return self.queryset.none() if not self.required else super().clean(value)
         if isinstance(value, str):
             value = [v.strip() for v in value.split(",") if v.strip()]
         elif isinstance(value, (list, tuple)):
@@ -27,7 +27,7 @@ class CommaSeparatedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
                 else:
                     expanded.append(item)
             value = expanded
-        return super().to_python(value)
+        return super().clean(value)
 
 
 class BodyTypesFilter(django_filters.ModelMultipleChoiceFilter):
@@ -178,14 +178,14 @@ class LoadFilter(django_filters.FilterSet):
     ) -> QuerySet[Load]:
         if not value:
             return queryset
-        return queryset.filter(origin_country_code__iexact=str(value).strip())
+        return queryset.filter(origin_country_code=str(value).strip().upper())
 
     def filter_destination_country(
         self, queryset: QuerySet[Load], name: str, value: Any
     ) -> QuerySet[Load]:
         if not value:
             return queryset
-        return queryset.filter(destination_country_code__iexact=str(value).strip())
+        return queryset.filter(destination_country_code=str(value).strip().upper())
 
     def filter_loading_from(
         self, queryset: QuerySet[Load], name: str, value: Any
