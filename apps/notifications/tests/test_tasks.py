@@ -12,8 +12,10 @@ from apps.notifications.tests.factories import NotificationFactory
 @pytest.mark.django_db
 def test_send_push_eager_execution_logs_correctly(
     caplog: pytest.LogCaptureFixture,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Verify send_push task executes eagerly and logs expected push message."""
+    monkeypatch.setattr(send_push.app.conf, "task_always_eager", True)
     notification = NotificationFactory(
         type=Notification.NotificationType.OFFER_RECEIVED,
     )
@@ -34,8 +36,10 @@ def test_send_push_eager_execution_logs_correctly(
 @pytest.mark.django_db
 def test_send_push_missing_notification_handled_gracefully(
     caplog: pytest.LogCaptureFixture,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Verify send_push logs warning and returns cleanly if notification does not exist."""
+    monkeypatch.setattr(send_push.app.conf, "task_always_eager", True)
     with caplog.at_level(logging.WARNING, logger="apps.notifications"):
         result = send_push.delay(999999)
 
