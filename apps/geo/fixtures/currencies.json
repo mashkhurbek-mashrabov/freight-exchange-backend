@@ -1,0 +1,44 @@
+[
+  {
+    "model": "geo.currency",
+    "pk": "UZS",
+    "fields": {
+      "name": "UZS"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "USD",
+    "fields": {
+      "name": "USD"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "EUR",
+    "fields": {
+      "name": "EUR"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "RUB",
+    "fields": {
+      "name": "RUB"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KZT",
+    "fields": {
+      "name": "KZT"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AED",
+    "fields": {
+      "name": "AED"
+    }
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "UZS",
+      "rate": "12700.000000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "EUR",
+      "rate": "0.920000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "RUB",
+      "rate": "92.000000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "KZT",
+      "rate": "480.000000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "AED",
+      "rate": "3.673000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "UZS",
+      "quote": "USD",
+      "rate": "0.000079",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "EUR",
+      "quote": "USD",
+      "rate": "1.086957",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "RUB",
+      "quote": "USD",
+      "rate": "0.010870",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "KZT",
+      "quote": "USD",
+      "rate": "0.002083",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "AED",
+      "quote": "USD",
+      "rate": "0.272257",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  }
+]
