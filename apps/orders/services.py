@@ -5,9 +5,11 @@ from typing import Any
 
 from django.db import transaction
 from django.utils import timezone
+from rest_framework import serializers
 
 from apps.accounts.models import Company, User
 from apps.core.exceptions import ServiceError
+from apps.core.validators import validate_document_file
 from apps.loads.models import Load
 from apps.notifications.models import Notification
 from apps.notifications.services import notify
@@ -260,6 +262,20 @@ def add_document(
             code="validation_error",
             status_code=400,
         )
+
+    try:
+        validate_document_file(file)
+    except serializers.ValidationError as err:
+        err_msg = (
+            str(err.detail[0])
+            if isinstance(err.detail, list) and err.detail
+            else str(err.detail)
+        )
+        raise ServiceError(
+            detail=err_msg,
+            code="validation_error",
+            status_code=400,
+        ) from err
 
     file_size = getattr(file, "size", 0)
     size_kb = max(1, round(file_size / 1024)) if file_size > 0 else 0

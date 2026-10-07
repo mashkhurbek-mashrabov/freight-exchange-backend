@@ -7,6 +7,7 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from apps.accounts.models import Company, Device, User
+from apps.core.validators import validate_image_file
 
 
 class OtpRequestSerializer(serializers.Serializer):
@@ -133,6 +134,12 @@ class UserSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     """Serializer for updating user profile."""
 
+    avatar = serializers.ImageField(
+        required=False,
+        allow_null=True,
+        validators=[validate_image_file],
+    )
+
     class Meta:
         model = User
         fields = ["full_name", "role", "language", "avatar"]
@@ -140,7 +147,6 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             "full_name": {"required": False},
             "role": {"required": False},
             "language": {"required": False},
-            "avatar": {"required": False, "allow_null": True},
         }
 
 

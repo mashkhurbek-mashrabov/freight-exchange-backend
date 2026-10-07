@@ -4,6 +4,7 @@ from typing import Any
 
 from rest_framework import serializers
 
+from apps.core.validators import validate_image_file
 from apps.garage.models import Vehicle, VehicleKind, VehicleType, normalize_plate_number
 
 
@@ -63,6 +64,11 @@ class VehicleCreateUpdateSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
     plate_number = serializers.CharField(max_length=50, required=False)
+    tech_passport_image = serializers.ImageField(
+        required=False,
+        allow_null=True,
+        validators=[validate_image_file],
+    )
 
     class Meta:
         model = Vehicle

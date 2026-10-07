@@ -3,6 +3,7 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from apps.accounts.models import User
+from apps.core.validators import validate_document_file
 from apps.loads.models import Load, RoutePoint
 from apps.orders.models import Order, OrderDocument, OrderStatusEvent, Rating
 
@@ -233,7 +234,10 @@ class OrderStatusUpdateSerializer(serializers.Serializer):
 class OrderDocumentUploadSerializer(serializers.Serializer):
     """Request serializer for uploading an order document."""
 
-    file = serializers.FileField(help_text="Document file to upload.")
+    file = serializers.FileField(
+        help_text="Document file to upload.",
+        validators=[validate_document_file],
+    )
     name = serializers.CharField(
         max_length=255,
         help_text="Display name for document (e.g. CMR, Bill of Lading, Invoice).",
