@@ -138,3 +138,17 @@ def test_unhandled_exception_returns_none() -> None:
     exc = RuntimeError("Unexpected crash")
     response = handler(exc, {})
     assert response is None
+
+
+def test_integrity_error_handled_as_409_conflict() -> None:
+    """Verify IntegrityError is formatted as a 409 conflict error."""
+    from django.db import IntegrityError
+
+    exc = IntegrityError("duplicate key value violates unique constraint")
+    response = handler(exc, {})
+    assert response is not None
+    assert response.status_code == status.HTTP_409_CONFLICT
+    assert response.data == {
+        "detail": "A database integrity conflict occurred.",
+        "code": "conflict",
+    }

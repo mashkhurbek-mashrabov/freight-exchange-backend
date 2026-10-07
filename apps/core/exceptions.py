@@ -4,6 +4,7 @@ from typing import Any
 
 from django.core.exceptions import PermissionDenied as DjangoPermissionDenied
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import IntegrityError
 from django.http import Http404
 from rest_framework import exceptions, status
 from rest_framework.response import Response
@@ -37,6 +38,15 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
         return Response(
             {"detail": str(exc) if str(exc) else "Not found.", "code": "not_found"},
             status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if isinstance(exc, IntegrityError):
+        return Response(
+            {
+                "detail": "A database integrity conflict occurred.",
+                "code": "conflict",
+            },
+            status=status.HTTP_409_CONFLICT,
         )
 
     if isinstance(exc, DjangoPermissionDenied):
