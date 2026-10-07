@@ -105,9 +105,9 @@ def latest_rates(
     """Return the latest exchange rate per base/quote currency pair."""
     qs = ExchangeRate.objects.select_related("base", "quote")
     if base:
-        qs = qs.filter(base_id__iexact=base.strip())
+        qs = qs.filter(base__code__iexact=base.strip())
     if quote:
-        qs = qs.filter(quote_id__iexact=quote.strip())
+        qs = qs.filter(quote__code__iexact=quote.strip())
 
     if connection.vendor == "postgresql":
         return qs.order_by("base_id", "quote_id", "-fetched_at").distinct(
