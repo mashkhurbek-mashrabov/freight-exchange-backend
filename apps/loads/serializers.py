@@ -508,6 +508,8 @@ class LoadDetailSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(serializers.BooleanField())
     def get_is_favorite(self, obj: Load) -> bool:
+        if hasattr(obj, "is_favorite_prefetched"):
+            return bool(obj.is_favorite_prefetched)
         request = self.context.get("request")
         if not request or not request.user or not request.user.is_authenticated:
             return False
@@ -515,20 +517,23 @@ class LoadDetailSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(CompactOfferSerializer)
     def get_my_offer(self, obj: Load) -> dict[str, Any] | None:
-        request = self.context.get("request")
-        if not request or not request.user or not request.user.is_authenticated:
-            return None
-        latest_offer = (
-            Offer.objects.filter(load=obj, carrier=request.user)
-            .order_by("-created_at", "-id")
-            .first()
-        )
-        if not latest_offer:
+        if hasattr(obj, "my_offer_prefetched"):
+            latest_offer = obj.my_offer_prefetched
+        else:
+            request = self.context.get("request")
+            if not request or not request.user or not request.user.is_authenticated:
+                return None
             latest_offer = (
-                Offer.objects.filter(load=obj, proposer=request.user)
+                Offer.objects.filter(load=obj, carrier=request.user)
                 .order_by("-created_at", "-id")
                 .first()
             )
+            if not latest_offer:
+                latest_offer = (
+                    Offer.objects.filter(load=obj, proposer=request.user)
+                    .order_by("-created_at", "-id")
+                    .first()
+                )
         if not latest_offer:
             return None
         return {

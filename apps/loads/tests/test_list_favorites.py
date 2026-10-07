@@ -1,10 +1,13 @@
 """Tests for MyFavoritesView: bookmarked loads list."""
 
+from typing import Any
+
 import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from apps.accounts.tests.factories import CarrierUserFactory
+from apps.loads.models import Load
 from apps.loads.tests.helpers_list import add_favorite_to_load, create_test_load
 
 
@@ -57,3 +60,33 @@ class TestMyFavoritesView:
         assert "price_amount" in item
         assert "currency" in item
         assert "body_types" in item
+
+    def test_favorites_constant_queries_independent_of_page_size(
+        self, django_assert_max_num_queries: Any
+    ) -> None:
+        """Verify GET /me/favorites query count is identical regardless of page size."""
+        user = CarrierUserFactory()
+        client = APIClient()
+        client.force_authenticate(user=user)
+
+        for i in range(25):
+            load = create_test_load(
+                cargo_description=f"Favorite load #{i}",
+                status=Load.Status.ACTIVE,
+            )
+            add_favorite_to_load(user=user, load=load)
+
+        # Warm-up request for internal caches
+        client.get("/api/v1/me/favorites?page_size=1")
+
+        with django_assert_max_num_queries(10) as captured_2:
+            resp_2 = client.get("/api/v1/me/favorites?page_size=2")
+            assert resp_2.status_code == status.HTTP_200_OK
+            assert len(resp_2.data["results"]) == 2
+
+        with django_assert_max_num_queries(10) as captured_20:
+            resp_20 = client.get("/api/v1/me/favorites?page_size=20")
+            assert resp_20.status_code == status.HTTP_200_OK
+            assert len(resp_20.data["results"]) == 20
+
+        assert len(captured_2.captured_queries) == len(captured_20.captured_queries)
