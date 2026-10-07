@@ -2,6 +2,7 @@
 
 import threading
 from decimal import Decimal
+from typing import Any
 
 import pytest
 from django.db import connection
@@ -641,3 +642,92 @@ def test_concurrency_simultaneous_accepts_one_winner() -> None:
     load.refresh_from_db()
     assert load.trucks_found == 1
     assert load.status == Load.Status.IN_PROGRESS
+
+
+@pytest.mark.django_db
+def test_accept_offer_twice_returns_409() -> None:
+    """Accepting the same offer a second time returns 409 invalid_transition."""
+    shipper = ShipperUserFactory(status=User.Status.VERIFIED)
+    carrier = CarrierUserFactory(status=User.Status.VERIFIED)
+    load = LoadFactory(shipper=shipper, status=Load.Status.ACTIVE)
+    offer = OfferFactory(
+        load=load,
+        carrier=carrier,
+        proposer=carrier,
+        recipient=shipper,
+        status=Offer.Status.PENDING,
+    )
+
+    # First accept succeeds
+    accepted = accept_offer(shipper, offer.pk)
+    assert accepted.status == Offer.Status.ACCEPTED
+
+    # Second accept raises 409
+    with pytest.raises(ServiceError) as exc_info:
+        accept_offer(shipper, offer.pk)
+    assert exc_info.value.status_code == 409
+    assert exc_info.value.code == "invalid_transition"
+
+
+@pytest.mark.django_db
+def test_counter_offer_twice_returns_409() -> None:
+    """Countering the same offer a second time returns 409 invalid_transition."""
+    shipper = ShipperUserFactory(status=User.Status.VERIFIED)
+    carrier = CarrierUserFactory(status=User.Status.VERIFIED)
+    load = LoadFactory(shipper=shipper, status=Load.Status.ACTIVE)
+    offer = OfferFactory(
+        load=load,
+        carrier=carrier,
+        proposer=carrier,
+        recipient=shipper,
+        status=Offer.Status.PENDING,
+    )
+
+    data = {
+        "amount": Decimal("2500.00"),
+        "currency": load.currency.code,
+        "comment": "Counter price",
+    }
+
+    # First counter succeeds
+    new_offer = counter_offer(shipper, offer.pk, data)
+    assert new_offer.status == Offer.Status.PENDING
+
+    # Second counter on same original offer raises 409
+    with pytest.raises(ServiceError) as exc_info:
+        counter_offer(shipper, offer.pk, data)
+    assert exc_info.value.status_code == 409
+    assert exc_info.value.code == "invalid_transition"
+
+
+@pytest.mark.django_db
+def test_counter_offer_unique_constraint_surfaces_409(monkeypatch: pytest.MonkeyPatch) -> None:
+    """If unique_pending_offer triggers during counter_offer, 409 is returned."""
+    from django.db import IntegrityError
+
+    shipper = ShipperUserFactory(status=User.Status.VERIFIED)
+    carrier = CarrierUserFactory(status=User.Status.VERIFIED)
+    load = LoadFactory(shipper=shipper, status=Load.Status.ACTIVE)
+    offer = OfferFactory(
+        load=load,
+        carrier=carrier,
+        proposer=carrier,
+        recipient=shipper,
+        status=Offer.Status.PENDING,
+    )
+
+    data = {
+        "amount": Decimal("2500.00"),
+        "currency": load.currency.code,
+        "comment": "Counter price",
+    }
+
+    def mock_create(*args: Any, **kwargs: Any) -> Any:
+        raise IntegrityError("duplicate key value violates unique constraint")
+
+    monkeypatch.setattr(Offer.objects, "create", mock_create)
+
+    with pytest.raises(ServiceError) as exc_info:
+        counter_offer(shipper, offer.pk, data)
+    assert exc_info.value.status_code == 409
+    assert exc_info.value.code == "duplicate_offer"

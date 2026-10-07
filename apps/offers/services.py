@@ -446,20 +446,27 @@ def counter_offer(user: User, offer_id: int, data: dict[str, Any]) -> Offer:
     old_offer.responded_at = now
     old_offer.save(update_fields=["status", "responded_at", "updated_at"])
 
-    new_offer = Offer.objects.create(
-        load=load,
-        carrier=old_offer.carrier,
-        proposer=old_offer.recipient,
-        recipient=old_offer.proposer,
-        vehicle=old_offer.vehicle,
-        trailer=old_offer.trailer,
-        parent=old_offer,
-        mode=Offer.Mode.PRICE_BID,
-        amount=amount,
-        currency=currency,
-        comment=str(data.get("comment") or "").strip(),
-        status=Offer.Status.PENDING,
-    )
+    try:
+        new_offer = Offer.objects.create(
+            load=load,
+            carrier=old_offer.carrier,
+            proposer=old_offer.recipient,
+            recipient=old_offer.proposer,
+            vehicle=old_offer.vehicle,
+            trailer=old_offer.trailer,
+            parent=old_offer,
+            mode=Offer.Mode.PRICE_BID,
+            amount=amount,
+            currency=currency,
+            comment=str(data.get("comment") or "").strip(),
+            status=Offer.Status.PENDING,
+        )
+    except IntegrityError as exc:
+        raise ServiceError(
+            detail="A pending offer already exists for this carrier on this load.",
+            code="duplicate_offer",
+            status_code=409,
+        ) from exc
 
     notify(
         user=new_offer.recipient,
