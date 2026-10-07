@@ -27,3 +27,13 @@ class CustomJWTAuthentication(JWTAuthentication):
                 code="account_blocked",
             )
         return user
+
+
+try:
+    from drf_spectacular.contrib.rest_framework_simplejwt import SimpleJWTScheme
+
+    class CustomJWTScheme(SimpleJWTScheme):
+        target_class = "apps.accounts.authentication.CustomJWTAuthentication"
+except ImportError:
+    pass
+
