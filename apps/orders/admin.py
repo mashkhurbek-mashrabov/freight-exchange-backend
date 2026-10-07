@@ -52,6 +52,27 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(OrderStatusEvent)
+class OrderStatusEventAdmin(admin.ModelAdmin):
+    """Admin interface for OrderStatusEvent model."""
+
+    list_display = ("id", "order", "status", "actor", "at")
+    list_filter = ("status", "at")
+    search_fields = ("order__id", "actor__phone", "note")
+    raw_id_fields = ("order", "actor")
+    readonly_fields = ("at",)
+
+
+@admin.register(OrderDocument)
+class OrderDocumentAdmin(admin.ModelAdmin):
+    """Admin interface for OrderDocument model."""
+
+    list_display = ("id", "order", "name", "size_kb", "uploaded_by", "created_at")
+    list_filter = ("created_at",)
+    search_fields = ("name", "order__id", "uploaded_by__phone")
+    raw_id_fields = ("order", "uploaded_by")
+
+
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
     """Admin interface for Rating model."""
@@ -74,3 +95,4 @@ class RatingAdmin(admin.ModelAdmin):
         "ratee__phone",
         "comment",
     )
+    raw_id_fields = ("order", "rater", "ratee")
