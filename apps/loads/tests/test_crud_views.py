@@ -553,3 +553,84 @@ def test_favorite_endpoints(countries: tuple[Country, Country, Country]) -> None
     res = client.get(f"/api/v1/loads/{load.pk}")
     assert res.status_code == status.HTTP_200_OK
     assert res.json()["is_favorite"] is False
+
+
+@pytest.mark.django_db
+def test_create_load_rejects_zero_or_negative_price_amount(
+    countries: tuple[Country, Country, Country],
+    currency_usd: Currency,
+) -> None:
+    shipper = ShipperUserFactory()
+    client = APIClient()
+    client.force_authenticate(user=shipper)
+
+    base_payload = {
+        "cargo_description": "Timber",
+        "weight_t": "10.000",
+        "currency": "USD",
+        "route_points": [
+            {
+                "seq": 1,
+                "kind": RoutePoint.Kind.LOADING,
+                "country": "UZ",
+                "lat": "41.0",
+                "lng": "69.0",
+            },
+            {
+                "seq": 2,
+                "kind": RoutePoint.Kind.UNLOADING,
+                "country": "KZ",
+                "lat": "43.0",
+                "lng": "76.0",
+            },
+        ],
+    }
+
+    # Zero price amount
+    payload_zero = {**base_payload, "price_amount": "0.00"}
+    res = client.post("/api/v1/loads", data=payload_zero, format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+
+    # Negative price amount
+    payload_neg = {**base_payload, "price_amount": "-500.00"}
+    res = client.post("/api/v1/loads", data=payload_neg, format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_create_load_rejects_negative_payment_terms_amounts(
+    countries: tuple[Country, Country, Country],
+    currency_usd: Currency,
+) -> None:
+    shipper = ShipperUserFactory()
+    client = APIClient()
+    client.force_authenticate(user=shipper)
+
+    payload = {
+        "cargo_description": "Machinery",
+        "weight_t": "15.000",
+        "price_amount": "1200.00",
+        "currency": "USD",
+        "route_points": [
+            {
+                "seq": 1,
+                "kind": RoutePoint.Kind.LOADING,
+                "country": "UZ",
+                "lat": "41.0",
+                "lng": "69.0",
+            },
+            {
+                "seq": 2,
+                "kind": RoutePoint.Kind.UNLOADING,
+                "country": "KZ",
+                "lat": "43.0",
+                "lng": "76.0",
+            },
+        ],
+        "payment_terms": {
+            "prepay_amount": "-100.00",
+        },
+    }
+    res = client.post("/api/v1/loads", data=payload, format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+

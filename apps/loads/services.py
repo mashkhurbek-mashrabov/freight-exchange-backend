@@ -119,12 +119,33 @@ def _validate_load_constraints(
                 status_code=400,
             )
 
+    if price_amount is not None and price_amount <= 0:
+        raise ServiceError(
+            "price_amount must be greater than 0.",
+            code="validation_error",
+            status_code=400,
+        )
+
     if price_amount is not None and not currency:
         raise ServiceError(
             "Currency is required when price_amount is provided.",
             code="validation_error",
             status_code=400,
         )
+
+
+def _validate_payment_terms_amounts(pt_data: dict[str, Any] | None) -> None:
+    """Validate payment terms amounts cannot be negative."""
+    if not pt_data:
+        return
+    for field in ("prepay_amount", "paid_amount", "remaining_amount"):
+        val = pt_data.get(field)
+        if val is not None and val < 0:
+            raise ServiceError(
+                f"{field} cannot be negative.",
+                code="validation_error",
+                status_code=400,
+            )
 
 
 def create_load(user: Any, data: dict[str, Any]) -> Load:
@@ -229,6 +250,7 @@ def create_load(user: Any, data: dict[str, Any]) -> Load:
 
         payment_terms_data = data.get("payment_terms")
         if payment_terms_data:
+            _validate_payment_terms_amounts(payment_terms_data)
             PaymentTerms.objects.create(
                 load=load,
                 **payment_terms_data,
@@ -362,6 +384,7 @@ def update_load(load: Load, data: dict[str, Any], user: Any = None) -> Load:
         if "payment_terms" in data:
             pt_data = data["payment_terms"]
             if pt_data is not None:
+                _validate_payment_terms_amounts(pt_data)
                 PaymentTerms.objects.update_or_create(
                     load=locked_load,
                     defaults=pt_data,
