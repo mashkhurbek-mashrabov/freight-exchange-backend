@@ -1,0 +1,13 @@
+celery==5.6.3
+Django==5.2.18
+django-cors-headers==4.9.0
+django-environ==0.14.0
+django-filter==26.2
+djangorestframework==3.18.3
+djangorestframework-simplejwt==5.5.1
+drf-spectacular==0.30.0
+gunicorn==26.2.0
+Pillow==12.3.0
+psycopg[binary]==3.3.6
+redis==8.1.0
+whitenoise==6.12.0
