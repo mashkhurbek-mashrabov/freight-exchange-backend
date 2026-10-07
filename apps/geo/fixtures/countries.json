@@ -1,0 +1,542 @@
+[
+  {
+    "model": "geo.country",
+    "pk": "UZ",
+    "fields": {
+      "name_i18n": {
+        "uz": "Oʻzbekiston",
+        "ru": "Узбекистан",
+        "en": "Uzbekistan"
+      },
+      "flag_url": "https://flagcdn.com/w80/uz.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "RU",
+    "fields": {
+      "name_i18n": {
+        "uz": "Rossiya",
+        "ru": "Россия",
+        "en": "Russia"
+      },
+      "flag_url": "https://flagcdn.com/w80/ru.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "KZ",
+    "fields": {
+      "name_i18n": {
+        "uz": "Qozogʻiston",
+        "ru": "Казахстан",
+        "en": "Kazakhstan"
+      },
+      "flag_url": "https://flagcdn.com/w80/kz.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "KG",
+    "fields": {
+      "name_i18n": {
+        "uz": "Qirgʻiziston",
+        "ru": "Кыргызстан",
+        "en": "Kyrgyzstan"
+      },
+      "flag_url": "https://flagcdn.com/w80/kg.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "TJ",
+    "fields": {
+      "name_i18n": {
+        "uz": "Tojikiston",
+        "ru": "Таджикистан",
+        "en": "Tajikistan"
+      },
+      "flag_url": "https://flagcdn.com/w80/tj.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "TM",
+    "fields": {
+      "name_i18n": {
+        "uz": "Turkmaniston",
+        "ru": "Туркменистан",
+        "en": "Turkmenistan"
+      },
+      "flag_url": "https://flagcdn.com/w80/tm.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "TR",
+    "fields": {
+      "name_i18n": {
+        "uz": "Turkiya",
+        "ru": "Турция",
+        "en": "Turkey"
+      },
+      "flag_url": "https://flagcdn.com/w80/tr.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "GB",
+    "fields": {
+      "name_i18n": {
+        "uz": "Buyuk Britaniya",
+        "ru": "Великобритания",
+        "en": "United Kingdom"
+      },
+      "flag_url": "https://flagcdn.com/w80/gb.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "CN",
+    "fields": {
+      "name_i18n": {
+        "uz": "Xitoy",
+        "ru": "Китай",
+        "en": "China"
+      },
+      "flag_url": "https://flagcdn.com/w80/cn.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "AF",
+    "fields": {
+      "name_i18n": {
+        "uz": "Afgʻoniston",
+        "ru": "Афганистан",
+        "en": "Afghanistan"
+      },
+      "flag_url": "https://flagcdn.com/w80/af.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "AZ",
+    "fields": {
+      "name_i18n": {
+        "uz": "Ozarbayjon",
+        "ru": "Азербайджан",
+        "en": "Azerbaijan"
+      },
+      "flag_url": "https://flagcdn.com/w80/az.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "AM",
+    "fields": {
+      "name_i18n": {
+        "uz": "Armaniston",
+        "ru": "Армения",
+        "en": "Armenia"
+      },
+      "flag_url": "https://flagcdn.com/w80/am.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "GE",
+    "fields": {
+      "name_i18n": {
+        "uz": "Gruziya",
+        "ru": "Грузия",
+        "en": "Georgia"
+      },
+      "flag_url": "https://flagcdn.com/w80/ge.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "BY",
+    "fields": {
+      "name_i18n": {
+        "uz": "Belarus",
+        "ru": "Беларусь",
+        "en": "Belarus"
+      },
+      "flag_url": "https://flagcdn.com/w80/by.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "UA",
+    "fields": {
+      "name_i18n": {
+        "uz": "Ukraina",
+        "ru": "Украина",
+        "en": "Ukraine"
+      },
+      "flag_url": "https://flagcdn.com/w80/ua.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "PL",
+    "fields": {
+      "name_i18n": {
+        "uz": "Polsha",
+        "ru": "Польша",
+        "en": "Poland"
+      },
+      "flag_url": "https://flagcdn.com/w80/pl.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "DE",
+    "fields": {
+      "name_i18n": {
+        "uz": "Germaniya",
+        "ru": "Германия",
+        "en": "Germany"
+      },
+      "flag_url": "https://flagcdn.com/w80/de.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "FR",
+    "fields": {
+      "name_i18n": {
+        "uz": "Fransiya",
+        "ru": "Франция",
+        "en": "France"
+      },
+      "flag_url": "https://flagcdn.com/w80/fr.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "IT",
+    "fields": {
+      "name_i18n": {
+        "uz": "Italiya",
+        "ru": "Италия",
+        "en": "Italy"
+      },
+      "flag_url": "https://flagcdn.com/w80/it.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "ES",
+    "fields": {
+      "name_i18n": {
+        "uz": "Ispaniya",
+        "ru": "Испания",
+        "en": "Spain"
+      },
+      "flag_url": "https://flagcdn.com/w80/es.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "NL",
+    "fields": {
+      "name_i18n": {
+        "uz": "Niderlandiya",
+        "ru": "Нидерланды",
+        "en": "Netherlands"
+      },
+      "flag_url": "https://flagcdn.com/w80/nl.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "LT",
+    "fields": {
+      "name_i18n": {
+        "uz": "Litva",
+        "ru": "Литва",
+        "en": "Lithuania"
+      },
+      "flag_url": "https://flagcdn.com/w80/lt.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "LV",
+    "fields": {
+      "name_i18n": {
+        "uz": "Latviya",
+        "ru": "Латвия",
+        "en": "Latvia"
+      },
+      "flag_url": "https://flagcdn.com/w80/lv.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "EE",
+    "fields": {
+      "name_i18n": {
+        "uz": "Estoniya",
+        "ru": "Эстония",
+        "en": "Estonia"
+      },
+      "flag_url": "https://flagcdn.com/w80/ee.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "FI",
+    "fields": {
+      "name_i18n": {
+        "uz": "Finlandiya",
+        "ru": "Финляндия",
+        "en": "Finland"
+      },
+      "flag_url": "https://flagcdn.com/w80/fi.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "RO",
+    "fields": {
+      "name_i18n": {
+        "uz": "Ruminiya",
+        "ru": "Румыния",
+        "en": "Romania"
+      },
+      "flag_url": "https://flagcdn.com/w80/ro.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "BG",
+    "fields": {
+      "name_i18n": {
+        "uz": "Bolgariya",
+        "ru": "Болгария",
+        "en": "Bulgaria"
+      },
+      "flag_url": "https://flagcdn.com/w80/bg.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "HU",
+    "fields": {
+      "name_i18n": {
+        "uz": "Vengriya",
+        "ru": "Венгрия",
+        "en": "Hungary"
+      },
+      "flag_url": "https://flagcdn.com/w80/hu.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "CZ",
+    "fields": {
+      "name_i18n": {
+        "uz": "Chexiya",
+        "ru": "Чехия",
+        "en": "Czechia"
+      },
+      "flag_url": "https://flagcdn.com/w80/cz.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "SK",
+    "fields": {
+      "name_i18n": {
+        "uz": "Slovakiya",
+        "ru": "Словакия",
+        "en": "Slovakia"
+      },
+      "flag_url": "https://flagcdn.com/w80/sk.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "IR",
+    "fields": {
+      "name_i18n": {
+        "uz": "Eron",
+        "ru": "Иран",
+        "en": "Iran"
+      },
+      "flag_url": "https://flagcdn.com/w80/ir.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "IQ",
+    "fields": {
+      "name_i18n": {
+        "uz": "Iroq",
+        "ru": "Ирак",
+        "en": "Iraq"
+      },
+      "flag_url": "https://flagcdn.com/w80/iq.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "AE",
+    "fields": {
+      "name_i18n": {
+        "uz": "Birlashgan Arab Amirliklari",
+        "ru": "Объединенные Арабские Эмираты",
+        "en": "United Arab Emirates"
+      },
+      "flag_url": "https://flagcdn.com/w80/ae.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "SA",
+    "fields": {
+      "name_i18n": {
+        "uz": "Saudiya Arabistoni",
+        "ru": "Саудовская Аравия",
+        "en": "Saudi Arabia"
+      },
+      "flag_url": "https://flagcdn.com/w80/sa.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "IN",
+    "fields": {
+      "name_i18n": {
+        "uz": "Hindiston",
+        "ru": "Индия",
+        "en": "India"
+      },
+      "flag_url": "https://flagcdn.com/w80/in.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "PK",
+    "fields": {
+      "name_i18n": {
+        "uz": "Pokiston",
+        "ru": "Пакистан",
+        "en": "Pakistan"
+      },
+      "flag_url": "https://flagcdn.com/w80/pk.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "MN",
+    "fields": {
+      "name_i18n": {
+        "uz": "Moʻgʻuliston",
+        "ru": "Монголия",
+        "en": "Mongolia"
+      },
+      "flag_url": "https://flagcdn.com/w80/mn.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "EG",
+    "fields": {
+      "name_i18n": {
+        "uz": "Misr",
+        "ru": "Египет",
+        "en": "Egypt"
+      },
+      "flag_url": "https://flagcdn.com/w80/eg.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "GR",
+    "fields": {
+      "name_i18n": {
+        "uz": "Gretsiya",
+        "ru": "Греция",
+        "en": "Greece"
+      },
+      "flag_url": "https://flagcdn.com/w80/gr.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "RS",
+    "fields": {
+      "name_i18n": {
+        "uz": "Serbiya",
+        "ru": "Сербия",
+        "en": "Serbia"
+      },
+      "flag_url": "https://flagcdn.com/w80/rs.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "MD",
+    "fields": {
+      "name_i18n": {
+        "uz": "Moldova",
+        "ru": "Молдова",
+        "en": "Moldova"
+      },
+      "flag_url": "https://flagcdn.com/w80/md.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "AT",
+    "fields": {
+      "name_i18n": {
+        "uz": "Avstriya",
+        "ru": "Австрия",
+        "en": "Austria"
+      },
+      "flag_url": "https://flagcdn.com/w80/at.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "BE",
+    "fields": {
+      "name_i18n": {
+        "uz": "Belgiya",
+        "ru": "Бельгия",
+        "en": "Belgium"
+      },
+      "flag_url": "https://flagcdn.com/w80/be.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "CH",
+    "fields": {
+      "name_i18n": {
+        "uz": "Shveytsariya",
+        "ru": "Швейцария",
+        "en": "Switzerland"
+      },
+      "flag_url": "https://flagcdn.com/w80/ch.png"
+    }
+  },
+  {
+    "model": "geo.country",
+    "pk": "SE",
+    "fields": {
+      "name_i18n": {
+        "uz": "Shvetsiya",
+        "ru": "Швеция",
+        "en": "Sweden"
+      },
+      "flag_url": "https://flagcdn.com/w80/se.png"
+    }
+  }
+]

@@ -1,0 +1,338 @@
+[
+  {
+    "model": "garage.vehicletype",
+    "pk": 1,
+    "fields": {
+      "code": "truck_tractor",
+      "name_i18n": {
+        "uz": "Sedelli tyagach",
+        "ru": "Седельный тягач",
+        "en": "Truck tractor"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 2,
+    "fields": {
+      "code": "rigid_truck",
+      "name_i18n": {
+        "uz": "Yaxlit yuk mashinasi",
+        "ru": "Одиночный грузовик",
+        "en": "Rigid truck"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 3,
+    "fields": {
+      "code": "tractor_4x2",
+      "name_i18n": {
+        "uz": "Tyagach 4x2",
+        "ru": "Тягач 4x2",
+        "en": "Tractor 4x2"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 4,
+    "fields": {
+      "code": "tractor_6x4",
+      "name_i18n": {
+        "uz": "Tyagach 6x4",
+        "ru": "Тягач 6x4",
+        "en": "Tractor 6x4"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 5,
+    "fields": {
+      "code": "tent",
+      "name_i18n": {
+        "uz": "Tent",
+        "ru": "Тент",
+        "en": "Tent trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 6,
+    "fields": {
+      "code": "board",
+      "name_i18n": {
+        "uz": "Bort",
+        "ru": "Борт",
+        "en": "Dropside trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 7,
+    "fields": {
+      "code": "van",
+      "name_i18n": {
+        "uz": "Furgon",
+        "ru": "Фургон",
+        "en": "Box van"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 8,
+    "fields": {
+      "code": "reefer",
+      "name_i18n": {
+        "uz": "Refrijerator",
+        "ru": "Рефрижератор",
+        "en": "Reefer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 9,
+    "fields": {
+      "code": "tanker",
+      "name_i18n": {
+        "uz": "Sisterna",
+        "ru": "Цистерна",
+        "en": "Tanker"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 10,
+    "fields": {
+      "code": "container",
+      "name_i18n": {
+        "uz": "Konteynerovoz",
+        "ru": "Контейнеровоз",
+        "en": "Container chassis"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 11,
+    "fields": {
+      "code": "low_loader",
+      "name_i18n": {
+        "uz": "Past ramali tral",
+        "ru": "Низкорамный трал",
+        "en": "Low loader"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 12,
+    "fields": {
+      "code": "isothermal",
+      "name_i18n": {
+        "uz": "Izotermik",
+        "ru": "Изотермический",
+        "en": "Isothermal"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 13,
+    "fields": {
+      "code": "open_container",
+      "name_i18n": {
+        "uz": "Ochiq konteyner",
+        "ru": "Открытый контейнер",
+        "en": "Open container"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 14,
+    "fields": {
+      "code": "oversize",
+      "name_i18n": {
+        "uz": "Gabaritsiz",
+        "ru": "Негабарит",
+        "en": "Oversize platform"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 15,
+    "fields": {
+      "code": "low_bed_platform",
+      "name_i18n": {
+        "uz": "Past ramali platforma",
+        "ru": "Низкорамная платформа",
+        "en": "Low-bed platform"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 16,
+    "fields": {
+      "code": "telescopic",
+      "name_i18n": {
+        "uz": "Teleskopik",
+        "ru": "Телескопический",
+        "en": "Telescopic trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 17,
+    "fields": {
+      "code": "timber_by_pallet",
+      "name_i18n": {
+        "uz": "Yogʻoch tashuvchi (paketlar)",
+        "ru": "Лесовоз/пакеты",
+        "en": "Timber carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 18,
+    "fields": {
+      "code": "dump",
+      "name_i18n": {
+        "uz": "Samosval",
+        "ru": "Самосвал",
+        "en": "Dump trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 19,
+    "fields": {
+      "code": "grain_hopper",
+      "name_i18n": {
+        "uz": "Don tashuvchi",
+        "ru": "Зерновоз",
+        "en": "Grain hopper"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 20,
+    "fields": {
+      "code": "car_carrier",
+      "name_i18n": {
+        "uz": "Avtovoz",
+        "ru": "Автовоз",
+        "en": "Car carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 21,
+    "fields": {
+      "code": "flatbed",
+      "name_i18n": {
+        "uz": "Bortli platforma",
+        "ru": "Бортовая платформа",
+        "en": "Flatbed"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 22,
+    "fields": {
+      "code": "curtainsider",
+      "name_i18n": {
+        "uz": "Shtora",
+        "ru": "Штора",
+        "en": "Curtainsider"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 23,
+    "fields": {
+      "code": "cement_tanker",
+      "name_i18n": {
+        "uz": "Sement tashuvchi",
+        "ru": "Цементовоз",
+        "en": "Cement tanker"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 24,
+    "fields": {
+      "code": "livestock",
+      "name_i18n": {
+        "uz": "Chorva tashuvchi",
+        "ru": "Скотовоз",
+        "en": "Livestock trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  }
+]
