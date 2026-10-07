@@ -157,18 +157,11 @@ Every project model in the 8 project apps is registered with Django Admin, with 
 
 ---
 
-## 5. Identified Gaps & Deferred Items (Honest Audit)
+## 5. Identified Gaps & Deferred Items
 
-The following items from the overarching roadmap (`plan.md`) are outside the immediate scope of Phase 8.4 or planned for subsequent delivery:
+1. **Phase 7 push delivery:** `apps/notifications/tasks.py::send_push` is an intentional logging stub
+   (FCM wiring is out of scope per `plan.md`).
+2. **Routing provider / real SMS provider:** out of scope per `plan.md`; extension points are
+   `apps/loads/services.py::compute_distance_km` and `apps/accounts/sms.py::send_sms`.
 
-1. **Phase 8.1 Demo Seeding Command (`seed_demo`):**
-   - *Status:* Deferred / Pending Phase 8.1.
-   - *Detail:* A custom management command `python manage.py seed_demo` to generate mock data (~30 loads, multi-point routes) is planned in Phase 8 item 1. Fixtures for reference data (`countries`, `currencies`, `vehicle_types`) are present and functional.
-
-2. **Phase 8.2 Global DRF Throttles:**
-   - *Status:* Deferred / Pending Phase 8.2.
-   - *Detail:* DRF `DEFAULT_THROTTLE_CLASSES` (`AnonRateThrottle` at 60/min, `UserRateThrottle` at 600/min) are not yet activated in `config/settings/base.py`. Phone-level OTP request throttling (max 3 requests per 10 minutes) is implemented and active via Django cache in `apps/accounts/services.py::request_otp`.
-
-3. **Phase 7 Push Notification Delivery:**
-   - *Status:* Logging stub by design.
-   - *Detail:* The Celery task `apps/notifications/tasks.py::send_push` is an intentional stub that logs dispatches (`push to user %s type %s`), with actual FCM network push integration deferred as specified in `plan.md` ("stub that logs; wired for FCM later").
+No other gaps: `seed_demo` (Phase 8.1) and global/OTP throttling (Phase 8.2) are implemented.

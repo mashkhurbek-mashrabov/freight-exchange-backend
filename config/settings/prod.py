@@ -10,7 +10,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])  # noqa: F405
 # SECRET_KEY is strictly required from environment with no insecure fallback
 try:
     SECRET_KEY = env("SECRET_KEY")  # noqa: F405
-    if not SECRET_KEY or SECRET_KEY == "dev-insecure-key":
+    if not SECRET_KEY or "insecure" in SECRET_KEY or SECRET_KEY.startswith("change-me"):
         raise ImproperlyConfigured("SECRET_KEY must be set to a secure value in production.")
 except (ImproperlyConfigured, KeyError) as exc:
     raise ImproperlyConfigured(f"SECRET_KEY is required in production: {exc}") from exc
