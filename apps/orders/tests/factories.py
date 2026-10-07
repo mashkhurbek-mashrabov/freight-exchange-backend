@@ -28,6 +28,15 @@ class OrderFactory(DjangoModelFactory):
     cancel_reason = ""
     completed_at = None
 
+    class Params:
+        created = factory.Trait(status=Order.Status.CREATED)
+        received = factory.Trait(status=Order.Status.RECEIVED)
+        picked_up = factory.Trait(status=Order.Status.PICKED_UP)
+        delivered = factory.Trait(status=Order.Status.DELIVERED)
+        awaiting_confirm = factory.Trait(status=Order.Status.AWAITING_CONFIRM)
+        completed = factory.Trait(status=Order.Status.COMPLETED)
+        cancelled = factory.Trait(status=Order.Status.CANCELLED)
+
 
 class OrderStatusEventFactory(DjangoModelFactory):
     """Factory for OrderStatusEvent model."""
