@@ -40,23 +40,21 @@ def hash_otp_code(code: str) -> str:
 
 
 def check_and_increment_otp_rate_limit(phone: str) -> None:
-    """Rate limit OTP requests to max 3 per phone per 10 minutes."""
+    """Rate limit OTP requests to max 3 per phone per 10 minutes atomically."""
     cache_key = f"otp_rate_limit:{phone}"
-    count = cache.get(cache_key, 0)
-    if count >= 3:
+    cache.add(cache_key, 0, timeout=600)
+    try:
+        count = cache.incr(cache_key)
+    except Exception:
+        count = 1
+        cache.set(cache_key, count, timeout=600)
+
+    if count > 3:
         raise ServiceError(
             detail="Too many OTP requests. Please try again later.",
             code="otp_rate_limited",
             status_code=429,
         )
-
-    if count == 0:
-        cache.set(cache_key, 1, timeout=600)
-    else:
-        try:
-            cache.incr(cache_key)
-        except Exception:
-            cache.set(cache_key, count + 1, timeout=600)
 
 
 def request_otp(phone: str) -> None:
@@ -114,9 +112,13 @@ def verify_otp(phone: str, code: str) -> dict[str, Any]:
 
         expected_hash = hash_otp_code(code)
         if not hmac.compare_digest(otp.code_hash, expected_hash):
-            otp.attempts += 1
-            otp.save(update_fields=["attempts", "updated_at"])
-            if otp.attempts >= 5:
+            with transaction.atomic():
+                locked_otp = OtpCode.objects.select_for_update().get(id=otp.id)
+                locked_otp.attempts += 1
+                locked_otp.save(update_fields=["attempts", "updated_at"])
+                attempts_count = locked_otp.attempts
+
+            if attempts_count >= 5:
                 raise ServiceError(
                     detail="Maximum OTP verification attempts exceeded.",
                     code="otp_attempts_exceeded",
@@ -130,14 +132,19 @@ def verify_otp(phone: str, code: str) -> dict[str, Any]:
 
     with transaction.atomic():
         if otp is not None:
-            otp = (
+            locked_otp = (
                 OtpCode.objects.select_for_update()
-                .filter(id=otp.id)
+                .filter(id=otp.id, used_at__isnull=True)
                 .first()
             )
-            if otp:
-                otp.used_at = timezone.now()
-                otp.save(update_fields=["used_at", "updated_at"])
+            if not locked_otp:
+                raise ServiceError(
+                    detail="Invalid OTP code.",
+                    code="otp_invalid",
+                    status_code=400,
+                )
+            locked_otp.used_at = timezone.now()
+            locked_otp.save(update_fields=["used_at", "updated_at"])
 
         user, is_new = User.objects.get_or_create(
             phone=normalized_phone,
