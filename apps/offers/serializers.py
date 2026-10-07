@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
 
 from apps.accounts.models import User
@@ -9,6 +10,7 @@ from apps.loads.models import Load, RoutePoint
 from apps.offers.models import Offer
 
 
+@extend_schema_serializer(component_name="OfferLocationSummary")
 class LocationSummarySerializer(serializers.Serializer):
     """Location summary containing address and country code."""
 

@@ -2,9 +2,10 @@
 
 from django.urls import path
 
+from apps.loads.root_views import LoadListCreateView
+from apps.loads.urls_list import urlpatterns as list_urlpatterns
 from apps.loads.views import (
     LoadCancelView,
-    LoadCreateView,
     LoadDetailView,
     LoadFavoriteView,
     LoadPublishView,
@@ -12,7 +13,6 @@ from apps.loads.views import (
 
 __all__ = [
     "LoadCancelView",
-    "LoadCreateView",
     "LoadDetailView",
     "LoadFavoriteView",
     "LoadPublishView",
@@ -20,8 +20,9 @@ __all__ = [
 ]
 
 urlpatterns = [
+    *[u for u in list_urlpatterns if u.pattern._route != "loads"],
     # Fixed paths first
-    path("loads", LoadCreateView.as_view(), name="load-create"),
+    path("loads", LoadListCreateView.as_view(), name="load-list-create"),
     # Parametric paths
     path("loads/<int:pk>", LoadDetailView.as_view(), name="load-detail"),
     path("loads/<int:pk>/publish", LoadPublishView.as_view(), name="load-publish"),
