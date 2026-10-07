@@ -4,6 +4,7 @@ from typing import Any
 
 from django.contrib import admin
 
+from apps.accounts import services
 from apps.accounts.models import Company, Device, OtpCode, User
 
 
@@ -26,8 +27,7 @@ class UserAdmin(admin.ModelAdmin):
     @admin.action(description="Mark selected users as verified")
     def mark_verified(self, request: Any, queryset: Any) -> None:
         """Mark selected users as verified."""
-        queryset.update(status=User.Status.VERIFIED)
-        # TODO(notify account_verified)
+        services.mark_verified(queryset)
 
 
 @admin.register(Company)

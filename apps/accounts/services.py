@@ -241,3 +241,17 @@ def register_device(user: User, fcm_token: str, platform: str) -> tuple[Device, 
 def delete_device(user: User, fcm_token: str) -> None:
     """Delete a registered device by its FCM token for the user."""
     Device.objects.filter(user=user, fcm_token=fcm_token).delete()
+
+
+@transaction.atomic
+def mark_verified(users) -> int:
+    """Set status=verified for non-verified users and send account_verified notifications."""
+    from apps.notifications.models import Notification
+    from apps.notifications.services import notify
+
+    targets = list(users.exclude(status=User.Status.VERIFIED))
+    for user in targets:
+        user.status = User.Status.VERIFIED
+        user.save(update_fields=["status", "updated_at"])
+        notify(user, Notification.Type.ACCOUNT_VERIFIED, {})
+    return len(targets)

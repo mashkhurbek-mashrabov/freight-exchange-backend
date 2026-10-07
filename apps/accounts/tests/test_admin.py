@@ -39,3 +39,16 @@ def test_admin_registrations() -> None:
     assert "name" in CompanyAdmin.list_display
     assert "fcm_token" in DeviceAdmin.list_display
     assert "attempts" in OtpCodeAdmin.list_display
+
+
+@pytest.mark.django_db
+def test_mark_verified_sets_status_and_notifies():
+    from apps.accounts import services
+    from apps.notifications.models import Notification
+
+    u = UserFactory(status=User.Status.NEW)
+    assert services.mark_verified(User.objects.filter(pk=u.pk)) == 1
+    u.refresh_from_db()
+    assert u.status == User.Status.VERIFIED
+    assert Notification.objects.filter(user=u, type="account_verified").count() == 1
+    assert services.mark_verified(User.objects.filter(pk=u.pk)) == 0
