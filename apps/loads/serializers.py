@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from drf_spectacular.settings import spectacular_settings
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
@@ -11,7 +12,6 @@ from apps.geo.models import Country, Currency
 from apps.geo.serializers import CountrySerializer
 from apps.loads.models import Favorite, Load, LoadDocument, PaymentTerms, RoutePoint
 from apps.offers.models import Offer
-from drf_spectacular.settings import spectacular_settings
 
 spectacular_settings.ENUM_NAME_OVERRIDES.setdefault(
     "VehicleKindEnum", "apps.garage.models.VehicleKind"
