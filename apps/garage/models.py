@@ -1,0 +1,1 @@
+"""Garage model definitions."""
