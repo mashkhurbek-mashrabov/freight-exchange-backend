@@ -204,6 +204,7 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,  # needed for file upload fields
     "SWAGGER_UI_SETTINGS": {"persistAuthorization": True, "displayRequestDuration": True},
     "SECURITY": [{"bearerAuth": []}],
+    "AUTHENTICATION_WHITELIST": ["rest_framework.authentication.SessionAuthentication"],
     "APPEND_COMPONENTS": {
         "securitySchemes": {
             "bearerAuth": {
