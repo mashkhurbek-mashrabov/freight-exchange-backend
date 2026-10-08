@@ -1,5 +1,7 @@
 """Tests for notification API endpoints."""
 
+from typing import Any
+
 import pytest
 from django.utils import timezone
 from rest_framework import status
@@ -55,6 +57,33 @@ def test_list_notifications_only_own(auth_client: tuple[APIClient, User]) -> Non
     result_ids = [item["id"] for item in data["results"]]
     # Newest first
     assert result_ids == [user_notifs[1].pk, user_notifs[0].pk]
+
+
+@pytest.mark.django_db
+def test_notifications_list_constant_queries_independent_of_page_size(
+    auth_client: tuple[APIClient, User],
+    django_assert_num_queries: Any,
+) -> None:
+    """Verify GET /notifications executes a constant number of queries regardless of page size."""
+    client, user = auth_client
+
+    # Create 20 notifications for the user
+    NotificationFactory.create_batch(20, user=user)
+
+    # Warm-up request for internal caches
+    client.get("/api/v1/notifications?page_size=1")
+
+    # 1 count query + 1 unread_count query + 1 select query with LIMIT 2
+    with django_assert_num_queries(3):
+        resp_2 = client.get("/api/v1/notifications?page_size=2")
+        assert resp_2.status_code == status.HTTP_200_OK
+        assert len(resp_2.json()["results"]) == 2
+
+    # Exactly the same 3 queries with LIMIT 15
+    with django_assert_num_queries(3):
+        resp_15 = client.get("/api/v1/notifications?page_size=15")
+        assert resp_15.status_code == status.HTTP_200_OK
+        assert len(resp_15.json()["results"]) == 15
 
 
 @pytest.mark.django_db

@@ -2,6 +2,7 @@
 
 from datetime import UTC, datetime
 from decimal import Decimal
+from typing import Any
 
 import pytest
 from rest_framework import status
@@ -87,3 +88,33 @@ class TestLoadMineView:
         draft_item = item_by_id[l_draft.id]
         assert draft_item["status"] == Load.Status.DRAFT
         assert draft_item["offers_count"] == 0
+
+    def test_mine_loads_constant_queries_independent_of_page_size(
+        self, django_assert_max_num_queries: Any
+    ) -> None:
+        """Verify GET /loads/mine query count is identical regardless of page size."""
+        shipper = ShipperUserFactory()
+        client = APIClient()
+        client.force_authenticate(user=shipper)
+
+        for i in range(25):
+            create_test_load(
+                shipper=shipper,
+                cargo_description=f"Shipper load #{i}",
+                status=Load.Status.ACTIVE,
+            )
+
+        # Warm-up request for internal caches
+        client.get("/api/v1/loads/mine?page_size=1")
+
+        with django_assert_max_num_queries(10) as captured_2:
+            resp_2 = client.get("/api/v1/loads/mine?page_size=2")
+            assert resp_2.status_code == status.HTTP_200_OK
+            assert len(resp_2.data["results"]) == 2
+
+        with django_assert_max_num_queries(10) as captured_20:
+            resp_20 = client.get("/api/v1/loads/mine?page_size=20")
+            assert resp_20.status_code == status.HTTP_200_OK
+            assert len(resp_20.data["results"]) == 20
+
+        assert len(captured_2.captured_queries) == len(captured_20.captured_queries)

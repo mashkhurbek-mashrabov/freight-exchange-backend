@@ -52,3 +52,18 @@ def test_mark_verified_sets_status_and_notifies():
     assert u.status == User.Status.VERIFIED
     assert Notification.objects.filter(user=u, type="account_verified").count() == 1
     assert services.mark_verified(User.objects.filter(pk=u.pk)) == 0
+
+
+@pytest.mark.django_db
+def test_user_admin_save_model_notifies_when_verified() -> None:
+    """UserAdmin.save_model sends account_verified notification on transition to verified."""
+    from apps.notifications.models import Notification
+
+    site = DummyAdminSite()
+    user_admin = UserAdmin(User, site)
+
+    user = UserFactory(status=User.Status.PENDING_REVIEW)
+    user.status = User.Status.VERIFIED
+
+    user_admin.save_model(None, user, None, change=True)
+    assert Notification.objects.filter(user=user, type="account_verified").count() == 1

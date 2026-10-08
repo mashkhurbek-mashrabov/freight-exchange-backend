@@ -130,23 +130,29 @@ def test_order_list_tab_filters() -> None:
 
 @pytest.mark.django_db
 def test_order_list_constant_queries(django_assert_num_queries: Any) -> None:
-    """Verify GET /orders executes a constant number of database queries (no N+1)."""
+    """Verify GET /orders executes constant queries (no N+1) independent of page size."""
     carrier = CarrierUserFactory()
     shipper = ShipperUserFactory()
     CompanyFactory(owner=carrier)
     CompanyFactory(owner=shipper)
 
-    # Create 10 orders
-    OrderFactory.create_batch(10, carrier=carrier, shipper=shipper)
+    # Create 15 orders
+    OrderFactory.create_batch(15, carrier=carrier, shipper=shipper)
 
     client = APIClient()
     client.force_authenticate(user=carrier)
 
-    # 1 count query + 1 select query with joins
+    # 1 count query + 1 select query with joins for page_size=2
     with django_assert_num_queries(2):
-        response = client.get("/api/v1/orders")
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.json()["results"]) == 10
+        response_2 = client.get("/api/v1/orders?page_size=2")
+        assert response_2.status_code == status.HTTP_200_OK
+        assert len(response_2.json()["results"]) == 2
+
+    # Exactly the same 2 queries for page_size=10
+    with django_assert_num_queries(2):
+        response_10 = client.get("/api/v1/orders?page_size=10")
+        assert response_10.status_code == status.HTTP_200_OK
+        assert len(response_10.json()["results"]) == 10
 
 
 @pytest.mark.django_db

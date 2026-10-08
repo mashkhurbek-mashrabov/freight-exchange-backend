@@ -58,30 +58,32 @@ class LoadCompactSerializer(serializers.Serializer):
     @extend_schema_field(LocationSummarySerializer)
     def get_origin(self, obj: Load) -> dict[str, Any]:
         """Return loading location with lowest sequence number."""
-        country = getattr(obj, "origin_country_code", None)
-        address = getattr(obj, "origin_address", None)
-        if country is None and address is None:
-            first_loading = (
-                obj.route_points.filter(kind=RoutePoint.Kind.LOADING).order_by("seq").first()
-            )
-            if first_loading:
-                country = first_loading.country_id
-                address = first_loading.address
-        return {"country": country, "address": address or ""}
+        if hasattr(obj, "origin_country_code") or hasattr(obj, "origin_address"):
+            country = getattr(obj, "origin_country_code", None)
+            address = getattr(obj, "origin_address", None)
+            return {"country": country, "address": address or ""}
+
+        first_loading = (
+            obj.route_points.filter(kind=RoutePoint.Kind.LOADING).order_by("seq").first()
+        )
+        if first_loading:
+            return {"country": first_loading.country_id, "address": first_loading.address or ""}
+        return {"country": None, "address": ""}
 
     @extend_schema_field(LocationSummarySerializer)
     def get_destination(self, obj: Load) -> dict[str, Any]:
         """Return unloading location with highest sequence number."""
-        country = getattr(obj, "destination_country_code", None)
-        address = getattr(obj, "destination_address", None)
-        if country is None and address is None:
-            last_unloading = (
-                obj.route_points.filter(kind=RoutePoint.Kind.UNLOADING).order_by("-seq").first()
-            )
-            if last_unloading:
-                country = last_unloading.country_id
-                address = last_unloading.address
-        return {"country": country, "address": address or ""}
+        if hasattr(obj, "destination_country_code") or hasattr(obj, "destination_address"):
+            country = getattr(obj, "destination_country_code", None)
+            address = getattr(obj, "destination_address", None)
+            return {"country": country, "address": address or ""}
+
+        last_unloading = (
+            obj.route_points.filter(kind=RoutePoint.Kind.UNLOADING).order_by("-seq").first()
+        )
+        if last_unloading:
+            return {"country": last_unloading.country_id, "address": last_unloading.address or ""}
+        return {"country": None, "address": ""}
 
     @extend_schema_field(serializers.CharField(allow_null=True))
     def get_shipper_company(self, obj: Load) -> str | None:

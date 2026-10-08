@@ -140,7 +140,7 @@ class LoadDetailView(generics.GenericAPIView):
     def get(self, request: Request, pk: int, *args: Any, **kwargs: Any) -> Response:
         load = get_object_or_404(
             Load.objects.select_related(
-                "company", "shipper", "shipper__company", "currency"
+                "company", "shipper", "shipper__company", "currency", "payment_terms"
             ).prefetch_related(
                 "route_points__country", "body_types", "documents"
             ),

@@ -173,3 +173,23 @@ def test_unread_count() -> None:
     NotificationFactory(user=other_user, read_at=None)
 
     assert unread_count(user) == 4
+
+
+@pytest.mark.django_db
+def test_notify_multiple_in_transaction_captures_correct_pks_on_commit(
+    django_capture_on_commit_callbacks: pytest.FixtureRequest,
+) -> None:
+    """Verify multiple notify calls in a transaction pass distinct IDs on commit."""
+    u1 = UserFactory()
+    u2 = UserFactory()
+
+    with patch("apps.notifications.services.send_push.delay") as mock_delay:
+        with django_capture_on_commit_callbacks(execute=True) as callbacks:
+            with transaction.atomic():
+                n1 = notify(u1, Notification.NotificationType.OFFER_REJECTED, {"n": 1})
+                n2 = notify(u2, Notification.NotificationType.OFFER_REJECTED, {"n": 2})
+
+        assert len(callbacks) == 2
+        assert mock_delay.call_count == 2
+        called_ids = [call.args[0] for call in mock_delay.call_args_list]
+        assert called_ids == [n1.pk, n2.pk]
