@@ -11,7 +11,6 @@ from django.utils import timezone
 
 from apps.accounts.models import Company, User
 from apps.garage.models import Vehicle, VehicleKind, VehicleType
-from apps.geo.models import ExchangeRate
 from apps.loads.models import Load, LoadDocument, RoutePoint
 from apps.loads.services import create_load, publish_load
 from apps.offers.models import Offer
@@ -36,18 +35,8 @@ class Command(BaseCommand):
         self.print_summary()
 
     def seed_fixtures(self) -> None:
-        """Load initial geo and garage fixtures idempotently."""
-        if ExchangeRate.objects.exists():
-            call_command("loaddata", "countries", "currencies", "vehicle_types", verbosity=0)
-        else:
-            call_command(
-                "loaddata",
-                "countries",
-                "currencies",
-                "exchange_rates",
-                "vehicle_types",
-                verbosity=0,
-            )
+        """Load initial geo and garage fixtures idempotently via load_references."""
+        call_command("load_references", verbosity=0)
 
     def seed_users(self) -> tuple[User, User]:
         """Create or update verified demo carrier and shipper with companies."""
