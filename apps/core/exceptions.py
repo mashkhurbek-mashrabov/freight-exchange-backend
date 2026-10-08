@@ -4,6 +4,7 @@ from typing import Any
 
 from django.core.exceptions import PermissionDenied as DjangoPermissionDenied
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import DatabaseError, IntegrityError
 from django.http import Http404
 from rest_framework import exceptions, status
 from rest_framework.response import Response
@@ -62,6 +63,24 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
                 "errors": errors,
             },
             status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if isinstance(exc, IntegrityError):
+        return Response(
+            {
+                "detail": "Database integrity constraint violated.",
+                "code": "conflict",
+            },
+            status=status.HTTP_409_CONFLICT,
+        )
+
+    if isinstance(exc, DatabaseError):
+        return Response(
+            {
+                "detail": "A database error occurred.",
+                "code": "database_error",
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
     response = drf_exception_handler(exc, context)
