@@ -1,4 +1,4 @@
-.PHONY: up down logs migrate makemigrations seed test lint shell schema
+.PHONY: up down logs migrate makemigrations references seed test lint shell schema
 
 up:
 	docker compose up --build -d
@@ -14,6 +14,9 @@ migrate:
 
 makemigrations:
 	docker compose exec web python manage.py makemigrations
+
+references:
+	docker compose exec web python manage.py load_references
 
 seed:
 	docker compose exec web python manage.py seed_demo

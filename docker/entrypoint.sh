@@ -40,6 +40,9 @@ if [ "${RUN_MIGRATIONS:-0}" = "1" ] || [ "${RUN_MIGRATIONS:-false}" = "true" ]; 
     echo "Running database migrations..."
     python manage.py migrate --noinput
 
+    echo "Loading reference data..."
+    python manage.py load_references
+
     echo "Collecting static files..."
     python manage.py collectstatic --noinput
 fi
