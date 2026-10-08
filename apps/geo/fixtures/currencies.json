@@ -3,42 +3,1155 @@
     "model": "geo.currency",
     "pk": "UZS",
     "fields": {
-      "name": "UZS"
+      "name": "Uzbekistan Sum"
     }
   },
   {
     "model": "geo.currency",
     "pk": "USD",
     "fields": {
-      "name": "USD"
+      "name": "US Dollar"
     }
   },
   {
     "model": "geo.currency",
     "pk": "EUR",
     "fields": {
-      "name": "EUR"
+      "name": "Euro"
     }
   },
   {
     "model": "geo.currency",
     "pk": "RUB",
     "fields": {
-      "name": "RUB"
-    }
-  },
-  {
-    "model": "geo.currency",
-    "pk": "KZT",
-    "fields": {
-      "name": "KZT"
+      "name": "Russian Ruble"
     }
   },
   {
     "model": "geo.currency",
     "pk": "AED",
     "fields": {
-      "name": "AED"
+      "name": "UAE Dirham"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AFN",
+    "fields": {
+      "name": "Afghani"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ALL",
+    "fields": {
+      "name": "Lek"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AMD",
+    "fields": {
+      "name": "Armenian Dram"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AOA",
+    "fields": {
+      "name": "Kwanza"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ARS",
+    "fields": {
+      "name": "Argentine Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AUD",
+    "fields": {
+      "name": "Australian Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AWG",
+    "fields": {
+      "name": "Aruban Florin"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "AZN",
+    "fields": {
+      "name": "Azerbaijan Manat"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BAM",
+    "fields": {
+      "name": "Convertible Mark"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BBD",
+    "fields": {
+      "name": "Barbados Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BDT",
+    "fields": {
+      "name": "Taka"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BHD",
+    "fields": {
+      "name": "Bahraini Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BIF",
+    "fields": {
+      "name": "Burundi Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BMD",
+    "fields": {
+      "name": "Bermudian Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BND",
+    "fields": {
+      "name": "Brunei Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BOB",
+    "fields": {
+      "name": "Boliviano"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BOV",
+    "fields": {
+      "name": "Mvdol"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BRL",
+    "fields": {
+      "name": "Brazilian Real"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BSD",
+    "fields": {
+      "name": "Bahamian Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BTN",
+    "fields": {
+      "name": "Ngultrum"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BWP",
+    "fields": {
+      "name": "Pula"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BYN",
+    "fields": {
+      "name": "Belarusian Ruble"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "BZD",
+    "fields": {
+      "name": "Belize Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CAD",
+    "fields": {
+      "name": "Canadian Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CDF",
+    "fields": {
+      "name": "Congolese Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CHE",
+    "fields": {
+      "name": "WIR Euro"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CHF",
+    "fields": {
+      "name": "Swiss Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CHW",
+    "fields": {
+      "name": "WIR Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CLF",
+    "fields": {
+      "name": "Unidad de Fomento"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CLP",
+    "fields": {
+      "name": "Chilean Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CNY",
+    "fields": {
+      "name": "Yuan Renminbi"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "COP",
+    "fields": {
+      "name": "Colombian Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "COU",
+    "fields": {
+      "name": "Unidad de Valor Real"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CRC",
+    "fields": {
+      "name": "Costa Rican Colon"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CUP",
+    "fields": {
+      "name": "Cuban Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CVE",
+    "fields": {
+      "name": "Cabo Verde Escudo"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "CZK",
+    "fields": {
+      "name": "Czech Koruna"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "DJF",
+    "fields": {
+      "name": "Djibouti Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "DKK",
+    "fields": {
+      "name": "Danish Krone"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "DOP",
+    "fields": {
+      "name": "Dominican Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "DZD",
+    "fields": {
+      "name": "Algerian Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "EGP",
+    "fields": {
+      "name": "Egyptian Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ERN",
+    "fields": {
+      "name": "Nakfa"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ETB",
+    "fields": {
+      "name": "Ethiopian Birr"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "FJD",
+    "fields": {
+      "name": "Fiji Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "FKP",
+    "fields": {
+      "name": "Falkland Islands Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GBP",
+    "fields": {
+      "name": "Pound Sterling"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GEL",
+    "fields": {
+      "name": "Lari"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GHS",
+    "fields": {
+      "name": "Ghana Cedi"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GIP",
+    "fields": {
+      "name": "Gibraltar Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GMD",
+    "fields": {
+      "name": "Dalasi"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GNF",
+    "fields": {
+      "name": "Guinean Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GTQ",
+    "fields": {
+      "name": "Quetzal"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "GYD",
+    "fields": {
+      "name": "Guyana Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "HKD",
+    "fields": {
+      "name": "Hong Kong Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "HNL",
+    "fields": {
+      "name": "Lempira"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "HTG",
+    "fields": {
+      "name": "Gourde"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "HUF",
+    "fields": {
+      "name": "Forint"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "IDR",
+    "fields": {
+      "name": "Rupiah"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ILS",
+    "fields": {
+      "name": "New Israeli Sheqel"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "INR",
+    "fields": {
+      "name": "Indian Rupee"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "IQD",
+    "fields": {
+      "name": "Iraqi Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "IRR",
+    "fields": {
+      "name": "Iranian Rial"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ISK",
+    "fields": {
+      "name": "Iceland Krona"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "JMD",
+    "fields": {
+      "name": "Jamaican Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "JOD",
+    "fields": {
+      "name": "Jordanian Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "JPY",
+    "fields": {
+      "name": "Yen"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KES",
+    "fields": {
+      "name": "Kenyan Shilling"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KGS",
+    "fields": {
+      "name": "Som"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KHR",
+    "fields": {
+      "name": "Riel"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KMF",
+    "fields": {
+      "name": "Comorian Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KPW",
+    "fields": {
+      "name": "North Korean Won"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KRW",
+    "fields": {
+      "name": "Won"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KWD",
+    "fields": {
+      "name": "Kuwaiti Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KYD",
+    "fields": {
+      "name": "Cayman Islands Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "KZT",
+    "fields": {
+      "name": "Tenge"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "LAK",
+    "fields": {
+      "name": "Lao Kip"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "LBP",
+    "fields": {
+      "name": "Lebanese Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "LKR",
+    "fields": {
+      "name": "Sri Lanka Rupee"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "LRD",
+    "fields": {
+      "name": "Liberian Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "LSL",
+    "fields": {
+      "name": "Loti"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "LYD",
+    "fields": {
+      "name": "Libyan Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MAD",
+    "fields": {
+      "name": "Moroccan Dirham"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MDL",
+    "fields": {
+      "name": "Moldovan Leu"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MGA",
+    "fields": {
+      "name": "Malagasy Ariary"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MKD",
+    "fields": {
+      "name": "Denar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MMK",
+    "fields": {
+      "name": "Kyat"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MNT",
+    "fields": {
+      "name": "Tugrik"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MOP",
+    "fields": {
+      "name": "Pataca"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MRU",
+    "fields": {
+      "name": "Ouguiya"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MUR",
+    "fields": {
+      "name": "Mauritius Rupee"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MVR",
+    "fields": {
+      "name": "Rufiyaa"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MWK",
+    "fields": {
+      "name": "Malawi Kwacha"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MXN",
+    "fields": {
+      "name": "Mexican Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MXV",
+    "fields": {
+      "name": "Mexican Unidad de Inversion (UDI)"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MYR",
+    "fields": {
+      "name": "Malaysian Ringgit"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "MZN",
+    "fields": {
+      "name": "Mozambique Metical"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "NAD",
+    "fields": {
+      "name": "Namibia Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "NGN",
+    "fields": {
+      "name": "Naira"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "NIO",
+    "fields": {
+      "name": "Cordoba Oro"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "NOK",
+    "fields": {
+      "name": "Norwegian Krone"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "NPR",
+    "fields": {
+      "name": "Nepalese Rupee"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "NZD",
+    "fields": {
+      "name": "New Zealand Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "OMR",
+    "fields": {
+      "name": "Rial Omani"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PAB",
+    "fields": {
+      "name": "Balboa"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PEN",
+    "fields": {
+      "name": "Sol"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PGK",
+    "fields": {
+      "name": "Kina"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PHP",
+    "fields": {
+      "name": "Philippine Peso"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PKR",
+    "fields": {
+      "name": "Pakistan Rupee"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PLN",
+    "fields": {
+      "name": "Zloty"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "PYG",
+    "fields": {
+      "name": "Guarani"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "QAR",
+    "fields": {
+      "name": "Qatari Rial"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "RON",
+    "fields": {
+      "name": "Romanian Leu"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "RSD",
+    "fields": {
+      "name": "Serbian Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "RWF",
+    "fields": {
+      "name": "Rwanda Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SAR",
+    "fields": {
+      "name": "Saudi Riyal"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SBD",
+    "fields": {
+      "name": "Solomon Islands Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SCR",
+    "fields": {
+      "name": "Seychelles Rupee"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SDG",
+    "fields": {
+      "name": "Sudanese Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SEK",
+    "fields": {
+      "name": "Swedish Krona"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SGD",
+    "fields": {
+      "name": "Singapore Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SHP",
+    "fields": {
+      "name": "Saint Helena Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SLE",
+    "fields": {
+      "name": "Leone"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SOS",
+    "fields": {
+      "name": "Somali Shilling"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SRD",
+    "fields": {
+      "name": "Surinam Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SSP",
+    "fields": {
+      "name": "South Sudanese Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "STN",
+    "fields": {
+      "name": "Dobra"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SVC",
+    "fields": {
+      "name": "El Salvador Colon"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SYP",
+    "fields": {
+      "name": "Syrian Pound"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "SZL",
+    "fields": {
+      "name": "Lilangeni"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "THB",
+    "fields": {
+      "name": "Baht"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TJS",
+    "fields": {
+      "name": "Somoni"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TMT",
+    "fields": {
+      "name": "Turkmenistan New Manat"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TND",
+    "fields": {
+      "name": "Tunisian Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TOP",
+    "fields": {
+      "name": "Pa’anga"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TRY",
+    "fields": {
+      "name": "Turkish Lira"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TTD",
+    "fields": {
+      "name": "Trinidad and Tobago Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TWD",
+    "fields": {
+      "name": "New Taiwan Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "TZS",
+    "fields": {
+      "name": "Tanzanian Shilling"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "UAH",
+    "fields": {
+      "name": "Hryvnia"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "UGX",
+    "fields": {
+      "name": "Uganda Shilling"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "USN",
+    "fields": {
+      "name": "US Dollar (Next day)"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "UYI",
+    "fields": {
+      "name": "Uruguay Peso en Unidades Indexadas (UI)"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "UYU",
+    "fields": {
+      "name": "Peso Uruguayo"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "UYW",
+    "fields": {
+      "name": "Unidad Previsional"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "VED",
+    "fields": {
+      "name": "Bolívar Soberano"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "VES",
+    "fields": {
+      "name": "Bolívar Soberano"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "VND",
+    "fields": {
+      "name": "Dong"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "VUV",
+    "fields": {
+      "name": "Vatu"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "WST",
+    "fields": {
+      "name": "Tala"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "XAD",
+    "fields": {
+      "name": "Arab Accounting Dinar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "XAF",
+    "fields": {
+      "name": "CFA Franc BEAC"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "XCD",
+    "fields": {
+      "name": "East Caribbean Dollar"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "XCG",
+    "fields": {
+      "name": "Caribbean Guilder"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "XOF",
+    "fields": {
+      "name": "CFA Franc BCEAO"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "XPF",
+    "fields": {
+      "name": "CFP Franc"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "YER",
+    "fields": {
+      "name": "Yemeni Rial"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ZAR",
+    "fields": {
+      "name": "Rand"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ZMW",
+    "fields": {
+      "name": "Zambian Kwacha"
+    }
+  },
+  {
+    "model": "geo.currency",
+    "pk": "ZWG",
+    "fields": {
+      "name": "Zimbabwe Gold"
     }
   }
 ]
