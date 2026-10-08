@@ -404,6 +404,13 @@ def publish_load(load: Load, user: Any = None) -> Load:
     with transaction.atomic():
         locked_load = Load.objects.select_for_update().get(pk=load.pk)
 
+        if user is not None and getattr(user, "status", None) != "verified":
+            raise ServiceError(
+                "Account is not verified.",
+                code="account_not_verified",
+                status_code=403,
+            )
+
         if user is not None and locked_load.shipper_id != user.id:
             raise ServiceError(
                 "You do not have permission to publish this load.",
