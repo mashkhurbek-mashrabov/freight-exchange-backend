@@ -334,5 +334,383 @@
       "image_url": "",
       "kind": "trailer"
     }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 25,
+    "fields": {
+      "code": "bulk_carrier",
+      "name_i18n": {
+        "uz": "Sochiluvchan yuklar yarim tirkamasi",
+        "ru": "Самосвальный полуприцеп (сыпучие грузы)",
+        "en": "Bulk carrier trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 26,
+    "fields": {
+      "code": "tipper_trailer",
+      "name_i18n": {
+        "uz": "Agʻdarma yarim tirkama",
+        "ru": "Самосвальный полуприцеп",
+        "en": "Tipper trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 27,
+    "fields": {
+      "code": "chip_carrier",
+      "name_i18n": {
+        "uz": "Qipiq tashuvchi tirkama",
+        "ru": "Щеповоз",
+        "en": "Wood chip carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 28,
+    "fields": {
+      "code": "pipe_carrier",
+      "name_i18n": {
+        "uz": "Quvur tashuvchi tirkama",
+        "ru": "Трубовоз",
+        "en": "Pipe carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 29,
+    "fields": {
+      "code": "glass_carrier",
+      "name_i18n": {
+        "uz": "Shisha tashuvchi tirkama",
+        "ru": "Стекловоз",
+        "en": "Glass carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 30,
+    "fields": {
+      "code": "jumbo",
+      "name_i18n": {
+        "uz": "Jumbo yarim tirkama",
+        "ru": "Полуприцеп Джамбо",
+        "en": "Jumbo trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 31,
+    "fields": {
+      "code": "mega_trailer",
+      "name_i18n": {
+        "uz": "Mega tirkama",
+        "ru": "Мегатрейлер",
+        "en": "Mega trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 32,
+    "fields": {
+      "code": "double_deck_car_carrier",
+      "name_i18n": {
+        "uz": "Ikki qavatli avtovoz",
+        "ru": "Двухъярусный автовоз",
+        "en": "Double-deck car carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 33,
+    "fields": {
+      "code": "sliding_curtain",
+      "name_i18n": {
+        "uz": "Surilma pardali tirkama",
+        "ru": "Шторно-сдвижной полуприцеп",
+        "en": "Sliding curtain trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 34,
+    "fields": {
+      "code": "refrigerated_multi_temp",
+      "name_i18n": {
+        "uz": "Koʻp haroratli refrijerator",
+        "ru": "Мультитемпературный рефрижератор",
+        "en": "Multi-temperature refrigerated trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 35,
+    "fields": {
+      "code": "food_tanker",
+      "name_i18n": {
+        "uz": "Oziq-ovqat sisternasi",
+        "ru": "Пищевая цистерна",
+        "en": "Food tanker"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 36,
+    "fields": {
+      "code": "gas_tanker",
+      "name_i18n": {
+        "uz": "Gaz tashuvchi sisterna",
+        "ru": "Газовоз",
+        "en": "Gas tanker"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 37,
+    "fields": {
+      "code": "bitumen_tanker",
+      "name_i18n": {
+        "uz": "Bitum tashuvchi sisterna",
+        "ru": "Битумовоз",
+        "en": "Bitumen tanker"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 38,
+    "fields": {
+      "code": "concrete_mixer",
+      "name_i18n": {
+        "uz": "Beton qorgich tirkama",
+        "ru": "Бетоносмеситель",
+        "en": "Concrete mixer trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 39,
+    "fields": {
+      "code": "crane_truck",
+      "name_i18n": {
+        "uz": "Kran-manipulyator",
+        "ru": "Манипулятор",
+        "en": "Crane truck (manipulator)"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 40,
+    "fields": {
+      "code": "tow_truck",
+      "name_i18n": {
+        "uz": "Evakuator",
+        "ru": "Эвакуатор",
+        "en": "Tow truck"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 41,
+    "fields": {
+      "code": "box_truck_3t",
+      "name_i18n": {
+        "uz": "Kichik tonnajli furgon (3.5 t gacha)",
+        "ru": "Малотоннажный фургон (до 3.5 т)",
+        "en": "Box truck up to 3.5t"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 42,
+    "fields": {
+      "code": "pickup",
+      "name_i18n": {
+        "uz": "Pikap",
+        "ru": "Пикап",
+        "en": "Pickup truck"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 43,
+    "fields": {
+      "code": "minibus_cargo",
+      "name_i18n": {
+        "uz": "Mikro-yuk mashinasi",
+        "ru": "Микро-грузовик",
+        "en": "Cargo mini truck"
+      },
+      "image_url": "",
+      "kind": "tractor"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 44,
+    "fields": {
+      "code": "container_20ft",
+      "name_i18n": {
+        "uz": "20 futli konteynerovoz",
+        "ru": "Контейнеровоз 20 футов",
+        "en": "20ft container chassis"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 45,
+    "fields": {
+      "code": "container_40ft",
+      "name_i18n": {
+        "uz": "40 futli konteynerovoz",
+        "ru": "Контейнеровоз 40 футов",
+        "en": "40ft container chassis"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 46,
+    "fields": {
+      "code": "platform_container",
+      "name_i18n": {
+        "uz": "Konteyner platformasi",
+        "ru": "Контейнерная площадка",
+        "en": "Container platform"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 47,
+    "fields": {
+      "code": "wide_load",
+      "name_i18n": {
+        "uz": "Keng platforma (gabaritsiz)",
+        "ru": "Широкая площадка (негабарит)",
+        "en": "Wide-load platform"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 48,
+    "fields": {
+      "code": "coil_carrier",
+      "name_i18n": {
+        "uz": "Oʻram tashuvchi tirkama",
+        "ru": "Рулоновоз",
+        "en": "Coil carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 49,
+    "fields": {
+      "code": "horse_carrier",
+      "name_i18n": {
+        "uz": "Ot tashuvchi tirkama",
+        "ru": "Коневоз",
+        "en": "Horse carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 50,
+    "fields": {
+      "code": "bee_hive_carrier",
+      "name_i18n": {
+        "uz": "Asalari qutisi tashuvchi tirkama",
+        "ru": "Пчеловоз",
+        "en": "Beehive carrier"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
+  },
+  {
+    "model": "garage.vehicletype",
+    "pk": 51,
+    "fields": {
+      "code": "live_fish_tank",
+      "name_i18n": {
+        "uz": "Tirik baliq tashuvchi sisterna",
+        "ru": "Живорыбный полуприцеп",
+        "en": "Live fish tank trailer"
+      },
+      "image_url": "",
+      "kind": "trailer"
+    }
   }
 ]

@@ -88,5 +88,221 @@
       "rate": "0.272257",
       "fetched_at": "2026-10-01T00:00:00Z"
     }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "KGS",
+      "rate": "87.500000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "KGS",
+      "quote": "USD",
+      "rate": "0.011429",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "TJS",
+      "rate": "10.600000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "TJS",
+      "quote": "USD",
+      "rate": "0.094340",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "TMT",
+      "rate": "3.500000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "TMT",
+      "quote": "USD",
+      "rate": "0.285714",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "TRY",
+      "rate": "41.000000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "TRY",
+      "quote": "USD",
+      "rate": "0.024390",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "CNY",
+      "rate": "7.200000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "CNY",
+      "quote": "USD",
+      "rate": "0.138889",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "GBP",
+      "rate": "0.760000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "GBP",
+      "quote": "USD",
+      "rate": "1.315789",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "AZN",
+      "rate": "1.700000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "AZN",
+      "quote": "USD",
+      "rate": "0.588235",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "GEL",
+      "rate": "2.700000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "GEL",
+      "quote": "USD",
+      "rate": "0.370370",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "UAH",
+      "rate": "41.000000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "UAH",
+      "quote": "USD",
+      "rate": "0.024390",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "PLN",
+      "rate": "3.900000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "PLN",
+      "quote": "USD",
+      "rate": "0.256410",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "BYN",
+      "rate": "3.300000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "BYN",
+      "quote": "USD",
+      "rate": "0.303030",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "USD",
+      "quote": "INR",
+      "rate": "84.000000",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "geo.exchangerate",
+    "fields": {
+      "base": "INR",
+      "quote": "USD",
+      "rate": "0.011905",
+      "fetched_at": "2026-10-01T00:00:00Z"
+    }
   }
 ]
