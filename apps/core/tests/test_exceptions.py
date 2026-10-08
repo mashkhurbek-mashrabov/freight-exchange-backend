@@ -138,3 +138,31 @@ def test_unhandled_exception_returns_none() -> None:
     exc = RuntimeError("Unexpected crash")
     response = handler(exc, {})
     assert response is None
+
+
+def test_integrity_error_handled_as_conflict() -> None:
+    """Verify Django IntegrityError produces 409 with conflict code without leaking SQL."""
+    from django.db import IntegrityError
+
+    exc = IntegrityError("duplicate key value violates unique constraint 'foo_idx'")
+    response = handler(exc, {})
+    assert response is not None
+    assert response.status_code == status.HTTP_409_CONFLICT
+    assert response.data == {
+        "detail": "Database integrity constraint violated.",
+        "code": "conflict",
+    }
+
+
+def test_database_error_handled_as_database_error() -> None:
+    """Verify Django DatabaseError produces 500 with sanitized code and detail."""
+    from django.db import DatabaseError
+
+    exc = DatabaseError("syntax error at or near 'SELECT table'")
+    response = handler(exc, {})
+    assert response is not None
+    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+    assert response.data == {
+        "detail": "A database error occurred.",
+        "code": "database_error",
+    }

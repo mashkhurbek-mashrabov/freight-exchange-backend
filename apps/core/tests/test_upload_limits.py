@@ -87,6 +87,24 @@ def test_validate_image_file_corrupted():
     assert "valid image" in str(exc.value).lower()
 
 
+class MockUploadFile(io.BytesIO):
+    def __init__(self, name: str, content: bytes, content_type: str = "image/png"):
+        super().__init__(content)
+        self.name = name
+        self.size = len(content)
+        self.content_type = content_type
+
+
+def test_validate_image_file_path_traversal():
+    """Image with path traversal characters raises validation error."""
+    content = generate_image_bytes(fmt="PNG")
+    for bad_name in ["../avatar.png", "..\\avatar.png", "sub/avatar.png", "avatar\x00.png"]:
+        uploaded = MockUploadFile(bad_name, content, content_type="image/png")
+        with pytest.raises(serializers.ValidationError) as exc:
+            validate_image_file(uploaded)
+        assert "Path traversal characters are not allowed" in str(exc.value)
+
+
 # ---------------------------------------------------------------------------
 # Unit tests for validate_document_file
 # ---------------------------------------------------------------------------
@@ -113,6 +131,16 @@ def test_validate_document_file_oversize():
     with pytest.raises(serializers.ValidationError) as exc:
         validate_document_file(uploaded)
     assert "cannot exceed 10 MB" in str(exc.value)
+
+
+def test_validate_document_file_path_traversal():
+    """Document with path traversal characters raises validation error."""
+    content = generate_pdf_bytes()
+    for bad_name in ["../doc.pdf", "..\\doc.pdf", "sub/doc.pdf", "doc\x00.pdf"]:
+        uploaded = MockUploadFile(bad_name, content, content_type="application/pdf")
+        with pytest.raises(serializers.ValidationError) as exc:
+            validate_document_file(uploaded)
+        assert "Path traversal characters are not allowed" in str(exc.value)
 
 
 def test_validate_document_file_forbidden_executable():

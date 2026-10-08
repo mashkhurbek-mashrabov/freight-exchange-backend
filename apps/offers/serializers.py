@@ -1,5 +1,6 @@
 """Serializers for offers app."""
 
+from decimal import Decimal
 from typing import Any
 
 from drf_spectacular.utils import extend_schema_serializer
@@ -175,6 +176,7 @@ class OfferCreateSerializer(serializers.Serializer):
     amount = serializers.DecimalField(
         max_digits=18,
         decimal_places=2,
+        min_value=Decimal("0.01"),
         required=False,
         allow_null=True,
         help_text="Proposed price amount (required if mode is price_bid).",
@@ -240,6 +242,7 @@ class CounterOfferSerializer(serializers.Serializer):
     amount = serializers.DecimalField(
         max_digits=18,
         decimal_places=2,
+        min_value=Decimal("0.01"),
         required=True,
         help_text="Counter offer price amount.",
     )

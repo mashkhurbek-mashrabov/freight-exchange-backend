@@ -102,6 +102,56 @@ def test_token_refresh_endpoint_success(api_client: APIClient) -> None:
 
 
 @pytest.mark.django_db
+def test_otp_verify_endpoint_inactive_user(api_client: APIClient) -> None:
+    """POST /auth/otp/verify for inactive user returns 403 account_blocked."""
+    UserFactory(phone="+998900000099", is_active=False)
+    with patch.object(settings, "OTP_DEV_CODE", "000000"):
+        response = api_client.post(
+            "/api/v1/auth/otp/verify",
+            {"phone": "+998900000099", "code": "000000"},
+            format="json",
+        )
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert response.data["code"] == "account_blocked"
+
+
+@pytest.mark.django_db
+def test_token_refresh_endpoint_blocked_user(api_client: APIClient) -> None:
+    """POST /auth/token/refresh for blocked user returns 401 account_blocked."""
+    user = UserFactory(phone="+998900000006")
+    refresh = RefreshToken.for_user(user)
+
+    user.status = User.Status.BLOCKED
+    user.save(update_fields=["status"])
+
+    response = api_client.post(
+        "/api/v1/auth/token/refresh",
+        {"refresh": str(refresh)},
+        format="json",
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.data["code"] == "account_blocked"
+
+
+@pytest.mark.django_db
+def test_token_refresh_endpoint_inactive_user(api_client: APIClient) -> None:
+    """POST /auth/token/refresh for inactive user returns 401 account_blocked."""
+    user = UserFactory(phone="+998900000007")
+    refresh = RefreshToken.for_user(user)
+
+    user.is_active = False
+    user.save(update_fields=["is_active"])
+
+    response = api_client.post(
+        "/api/v1/auth/token/refresh",
+        {"refresh": str(refresh)},
+        format="json",
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.data["code"] == "account_blocked"
+
+
+@pytest.mark.django_db
 def test_logout_endpoint_blacklists_refresh_token(api_client: APIClient) -> None:
     """POST /auth/logout blacklists the token so subsequent refresh fails."""
     user = UserFactory(phone="+998900000005")
@@ -122,3 +172,21 @@ def test_logout_endpoint_blacklists_refresh_token(api_client: APIClient) -> None
         format="json",
     )
     assert refresh_res.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+@pytest.mark.django_db
+def test_authenticated_request_with_token_blocked_user_rejected(api_client: APIClient) -> None:
+    """Requests with access token of a blocked user are rejected with 401."""
+    user = UserFactory(phone="+998900000008")
+    refresh = RefreshToken.for_user(user)
+    access_token = str(refresh.access_token)
+
+    # Block user
+    user.status = User.Status.BLOCKED
+    user.save(update_fields=["status"])
+
+    api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
+    response = api_client.get("/api/v1/me")
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.data["code"] == "account_blocked"
+

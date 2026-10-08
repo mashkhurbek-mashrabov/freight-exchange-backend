@@ -553,3 +553,135 @@ def test_favorite_endpoints(countries: tuple[Country, Country, Country]) -> None
     res = client.get(f"/api/v1/loads/{load.pk}")
     assert res.status_code == status.HTTP_200_OK
     assert res.json()["is_favorite"] is False
+
+
+@pytest.mark.django_db
+def test_create_load_rejects_zero_or_negative_price_amount(
+    countries: tuple[Country, Country, Country],
+    currency_usd: Currency,
+) -> None:
+    shipper = ShipperUserFactory()
+    client = APIClient()
+    client.force_authenticate(user=shipper)
+
+    base_payload = {
+        "cargo_description": "Timber",
+        "weight_t": "10.000",
+        "currency": "USD",
+        "route_points": [
+            {
+                "seq": 1,
+                "kind": RoutePoint.Kind.LOADING,
+                "country": "UZ",
+                "lat": "41.0",
+                "lng": "69.0",
+            },
+            {
+                "seq": 2,
+                "kind": RoutePoint.Kind.UNLOADING,
+                "country": "KZ",
+                "lat": "43.0",
+                "lng": "76.0",
+            },
+        ],
+    }
+
+    # Zero price amount
+    payload_zero = {**base_payload, "price_amount": "0.00"}
+    res = client.post("/api/v1/loads", data=payload_zero, format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+
+    # Negative price amount
+    payload_neg = {**base_payload, "price_amount": "-500.00"}
+    res = client.post("/api/v1/loads", data=payload_neg, format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_create_load_rejects_negative_payment_terms_amounts(
+    countries: tuple[Country, Country, Country],
+    currency_usd: Currency,
+) -> None:
+    shipper = ShipperUserFactory()
+    client = APIClient()
+    client.force_authenticate(user=shipper)
+
+    payload = {
+        "cargo_description": "Machinery",
+        "weight_t": "15.000",
+        "price_amount": "1200.00",
+        "currency": "USD",
+        "route_points": [
+            {
+                "seq": 1,
+                "kind": RoutePoint.Kind.LOADING,
+                "country": "UZ",
+                "lat": "41.0",
+                "lng": "69.0",
+            },
+            {
+                "seq": 2,
+                "kind": RoutePoint.Kind.UNLOADING,
+                "country": "KZ",
+                "lat": "43.0",
+                "lng": "76.0",
+            },
+        ],
+        "payment_terms": {
+            "prepay_amount": "-100.00",
+        },
+    }
+    res = client.post("/api/v1/loads", data=payload, format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_unverified_shipper_cannot_publish_load(
+    countries: tuple[Country, Country, Country],
+) -> None:
+    unverified_shipper = UserFactory(role=User.Role.SHIPPER, status=User.Status.NEW)
+    load = Load.objects.create(
+        shipper=unverified_shipper,
+        cargo_description="Test draft",
+        weight_t=Decimal("5.000"),
+        status=Load.Status.DRAFT,
+    )
+    RoutePoint.objects.create(
+        load=load,
+        seq=1,
+        kind=RoutePoint.Kind.LOADING,
+        country_id="UZ",
+        lat=Decimal("41.0"),
+        lng=Decimal("69.0"),
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=unverified_shipper)
+    res = client.post(f"/api/v1/loads/{load.pk}/publish")
+    assert res.status_code == status.HTTP_403_FORBIDDEN
+    assert res.json()["code"] == "account_not_verified"
+
+
+@pytest.mark.django_db
+def test_cannot_favorite_other_users_draft_load(
+    countries: tuple[Country, Country, Country],
+) -> None:
+    shipper = ShipperUserFactory()
+    carrier = CarrierUserFactory()
+    draft_load = Load.objects.create(
+        shipper=shipper,
+        cargo_description="Secret draft load",
+        weight_t=Decimal("10.000"),
+        status=Load.Status.DRAFT,
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=carrier)
+    # Attempting to favorite another user's draft load must return 404
+    post_res = client.post(f"/api/v1/loads/{draft_load.pk}/favorite")
+    assert post_res.status_code == status.HTTP_404_NOT_FOUND
+
+    del_res = client.delete(f"/api/v1/loads/{draft_load.pk}/favorite")
+    assert del_res.status_code == status.HTTP_404_NOT_FOUND
+
+

@@ -4,7 +4,9 @@ import re
 from typing import Any
 
 from drf_spectacular.utils import extend_schema_field
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.settings import api_settings as jwt_settings
 
 from apps.accounts.models import Company, Device, User
 from apps.core.validators import validate_image_file
@@ -167,6 +169,25 @@ class TokenRefreshResponseSerializer(serializers.Serializer):
         required=False,
         help_text="New JWT refresh token if rotation is enabled.",
     )
+
+
+class CustomTokenRefreshSerializer(TokenRefreshSerializer):
+    """Token refresh serializer validating user active and non-blocked status."""
+
+    def validate(self, attrs: dict[str, Any]) -> dict[str, Any]:
+        refresh = self.token_class(attrs["refresh"])
+        user_id = refresh.get(jwt_settings.USER_ID_CLAIM)
+        if user_id is not None:
+            user = User.objects.filter(pk=user_id).first()
+            if not user or not user.is_active or user.status == User.Status.BLOCKED:
+                from apps.core.exceptions import ServiceError
+
+                raise ServiceError(
+                    detail="User account is blocked or inactive.",
+                    code="account_blocked",
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                )
+        return super().validate(attrs)
 
 
 class LogoutSerializer(serializers.Serializer):

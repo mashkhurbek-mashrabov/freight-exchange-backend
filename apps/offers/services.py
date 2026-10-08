@@ -110,10 +110,29 @@ def create_offer(carrier: User, load: Load, data: dict[str, Any]) -> Offer:
                 status_code=400,
             )
         amount = Decimal(str(raw_amount))
+        if amount <= Decimal("0"):
+            raise ServiceError(
+                detail="Amount must be greater than zero.",
+                code="validation_error",
+                status_code=400,
+            )
         currency = _resolve_currency(raw_currency)
     else:
         amount = Decimal(str(raw_amount)) if raw_amount is not None else None
+        if amount is not None and amount <= Decimal("0"):
+            raise ServiceError(
+                detail="Amount must be greater than zero.",
+                code="validation_error",
+                status_code=400,
+            )
         currency = _resolve_currency(raw_currency) if raw_currency else None
+
+    if load.currency_id and currency and load.currency_id != currency.code:
+        raise ServiceError(
+            detail="Offer currency must match load currency.",
+            code="currency_mismatch",
+            status_code=400,
+        )
 
     vehicle = _resolve_vehicle(
         data.get("vehicle") or data.get("vehicle_id"),
@@ -438,7 +457,20 @@ def counter_offer(user: User, offer_id: int, data: dict[str, Any]) -> Offer:
         )
 
     amount = Decimal(str(raw_amount))
+    if amount <= Decimal("0"):
+        raise ServiceError(
+            detail="Amount must be greater than zero.",
+            code="validation_error",
+            status_code=400,
+        )
     currency = _resolve_currency(raw_currency)
+
+    if load.currency_id and currency and load.currency_id != currency.code:
+        raise ServiceError(
+            detail="Offer currency must match load currency.",
+            code="currency_mismatch",
+            status_code=400,
+        )
 
     # Mark old offer countered first to satisfy unique pending constraint
     now = timezone.now()

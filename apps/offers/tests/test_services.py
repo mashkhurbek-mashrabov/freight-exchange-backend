@@ -641,3 +641,101 @@ def test_concurrency_simultaneous_accepts_one_winner() -> None:
     load.refresh_from_db()
     assert load.trucks_found == 1
     assert load.status == Load.Status.IN_PROGRESS
+
+
+@pytest.mark.django_db
+def test_create_offer_rejects_zero_and_negative_amounts() -> None:
+    carrier = CarrierUserFactory()
+    load = LoadFactory(status=Load.Status.ACTIVE)
+
+    # Zero amount
+    with pytest.raises(ServiceError) as exc_zero:
+        create_offer(
+            carrier=carrier,
+            load=load,
+            data={
+                "mode": Offer.Mode.PRICE_BID,
+                "amount": Decimal("0.00"),
+                "currency": load.currency,
+            },
+        )
+    assert exc_zero.value.status_code == 400
+    assert exc_zero.value.code == "validation_error"
+
+    # Negative amount
+    with pytest.raises(ServiceError) as exc_neg:
+        create_offer(
+            carrier=carrier,
+            load=load,
+            data={
+                "mode": Offer.Mode.PRICE_BID,
+                "amount": Decimal("-100.00"),
+                "currency": load.currency,
+            },
+        )
+    assert exc_neg.value.status_code == 400
+    assert exc_neg.value.code == "validation_error"
+
+
+@pytest.mark.django_db
+def test_create_and_counter_offer_rejects_currency_mismatch() -> None:
+    from apps.geo.models import Currency
+
+    eur, _ = Currency.objects.get_or_create(code="EUR", defaults={"name": "Euro"})
+    usd, _ = Currency.objects.get_or_create(code="USD", defaults={"name": "US Dollar"})
+
+    carrier = CarrierUserFactory()
+    shipper = ShipperUserFactory()
+    load = LoadFactory(status=Load.Status.ACTIVE, shipper=shipper, currency=usd)
+
+    # create_offer with mismatched currency
+    with pytest.raises(ServiceError) as exc:
+        create_offer(
+            carrier=carrier,
+            load=load,
+            data={
+                "mode": Offer.Mode.PRICE_BID,
+                "amount": Decimal("1000.00"),
+                "currency": eur,
+            },
+        )
+    assert exc.value.status_code == 400
+    assert exc.value.code == "currency_mismatch"
+
+    # Valid initial offer
+    offer = create_offer(
+        carrier=carrier,
+        load=load,
+        data={
+            "mode": Offer.Mode.PRICE_BID,
+            "amount": Decimal("1000.00"),
+            "currency": usd,
+        },
+    )
+
+    # counter_offer with zero amount
+    with pytest.raises(ServiceError) as exc_counter_zero:
+        counter_offer(
+            user=shipper,
+            offer_id=offer.pk,
+            data={
+                "amount": Decimal("0.00"),
+                "currency": "USD",
+            },
+        )
+    assert exc_counter_zero.value.status_code == 400
+    assert exc_counter_zero.value.code == "validation_error"
+
+    # counter_offer with mismatched currency
+    with pytest.raises(ServiceError) as exc_counter_curr:
+        counter_offer(
+            user=shipper,
+            offer_id=offer.pk,
+            data={
+                "amount": Decimal("900.00"),
+                "currency": "EUR",
+            },
+        )
+    assert exc_counter_curr.value.status_code == 400
+    assert exc_counter_curr.value.code == "currency_mismatch"
+

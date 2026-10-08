@@ -1,5 +1,6 @@
 """Serializers for loads app."""
 
+from decimal import Decimal
 from typing import Any
 
 from drf_spectacular.settings import spectacular_settings
@@ -99,6 +100,7 @@ class PaymentTermsWriteSerializer(serializers.Serializer):
     prepay_amount = serializers.DecimalField(
         max_digits=18,
         decimal_places=2,
+        min_value=Decimal("0.00"),
         required=False,
         allow_null=True,
         coerce_to_string=True,
@@ -114,6 +116,7 @@ class PaymentTermsWriteSerializer(serializers.Serializer):
     paid_amount = serializers.DecimalField(
         max_digits=18,
         decimal_places=2,
+        min_value=Decimal("0.00"),
         required=False,
         allow_null=True,
         coerce_to_string=True,
@@ -129,6 +132,7 @@ class PaymentTermsWriteSerializer(serializers.Serializer):
     remaining_amount = serializers.DecimalField(
         max_digits=18,
         decimal_places=2,
+        min_value=Decimal("0.00"),
         required=False,
         allow_null=True,
         coerce_to_string=True,
@@ -253,6 +257,7 @@ class LoadWriteSerializer(serializers.Serializer):
     price_amount = serializers.DecimalField(
         max_digits=18,
         decimal_places=2,
+        min_value=Decimal("0.01"),
         required=False,
         allow_null=True,
         coerce_to_string=True,

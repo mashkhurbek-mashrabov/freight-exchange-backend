@@ -4,6 +4,7 @@ from typing import Any
 
 from django.core.exceptions import PermissionDenied as DjangoPermissionDenied
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import DatabaseError, IntegrityError
 from django.http import Http404
 from rest_framework import exceptions, status
 from rest_framework.response import Response
@@ -64,6 +65,24 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
             status=status.HTTP_400_BAD_REQUEST,
         )
 
+    if isinstance(exc, IntegrityError):
+        return Response(
+            {
+                "detail": "Database integrity constraint violated.",
+                "code": "conflict",
+            },
+            status=status.HTTP_409_CONFLICT,
+        )
+
+    if isinstance(exc, DatabaseError):
+        return Response(
+            {
+                "detail": "A database error occurred.",
+                "code": "database_error",
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
     response = drf_exception_handler(exc, context)
     if response is not None:
         if isinstance(exc, exceptions.Throttled):
@@ -105,7 +124,9 @@ def handler(exc: Exception, context: dict[str, Any]) -> Response | None:
             response.data = {"detail": detail, "code": str(code)}
             return response
 
-        code = getattr(exc, "default_code", "error")
+        code = getattr(getattr(exc, "detail", None), "code", None) or getattr(
+            exc, "default_code", "error"
+        )
         detail_val = (
             response.data.get("detail", str(response.data))
             if isinstance(response.data, dict)

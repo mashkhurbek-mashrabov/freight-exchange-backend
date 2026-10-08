@@ -75,8 +75,16 @@ def validate_image_file(f: Any) -> Any:
         return f
 
     file_name = getattr(f, "name", "") or ""
-    if not file_name:
-        raise serializers.ValidationError("Image file must have a valid name.")
+    if (
+        not file_name
+        or ".." in file_name
+        or "/" in file_name
+        or "\\" in file_name
+        or "\x00" in file_name
+    ):
+        raise serializers.ValidationError(
+            "Invalid file name. Path traversal characters are not allowed."
+        )
 
     ext = Path(file_name).suffix.lower()
     if ext not in ALLOWED_IMAGE_EXTENSIONS:
@@ -127,8 +135,16 @@ def validate_document_file(f: Any) -> Any:
         raise serializers.ValidationError("File is required.")
 
     file_name = getattr(f, "name", "") or ""
-    if not file_name:
-        raise serializers.ValidationError("Document file must have a valid name.")
+    if (
+        not file_name
+        or ".." in file_name
+        or "/" in file_name
+        or "\\" in file_name
+        or "\x00" in file_name
+    ):
+        raise serializers.ValidationError(
+            "Invalid file name. Path traversal characters are not allowed."
+        )
 
     ext = Path(file_name).suffix.lower()
     content_type = getattr(f, "content_type", None)

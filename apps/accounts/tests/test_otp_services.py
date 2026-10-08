@@ -195,3 +195,23 @@ def test_verify_otp_blocked_user() -> None:
 
     assert exc_info.value.status_code == 403
     assert exc_info.value.code == "account_blocked"
+
+
+@pytest.mark.django_db
+def test_verify_otp_used_code_cannot_be_reused() -> None:
+    """Verify code with used_at set cannot be verified again."""
+    phone = "+998908889900"
+    code = "777888"
+    OtpCodeFactory(
+        phone=phone,
+        code_hash=hash_otp_code(code),
+        used_at=timezone.now(),
+    )
+
+    with patch.object(settings, "OTP_DEV_CODE", ""):
+        with pytest.raises(ServiceError) as exc_info:
+            verify_otp(phone=phone, code=code)
+
+    assert exc_info.value.status_code == 400
+    assert exc_info.value.code == "otp_invalid"
+

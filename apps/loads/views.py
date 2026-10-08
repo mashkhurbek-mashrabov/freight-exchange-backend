@@ -177,7 +177,7 @@ class LoadDetailView(generics.GenericAPIView):
 class LoadPublishView(generics.GenericAPIView):
     """Publish a draft load to active status."""
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsVerified]
     serializer_class = LoadDetailSerializer
 
     @extend_schema(
@@ -247,6 +247,8 @@ class LoadFavoriteView(generics.GenericAPIView):
     )
     def post(self, request: Request, pk: int, *args: Any, **kwargs: Any) -> Response:
         load = get_object_or_404(Load, pk=pk)
+        if load.status == Load.Status.DRAFT and load.shipper_id != request.user.id:
+            raise Http404("Load not found.")
         add_favorite(request.user, load)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -263,5 +265,7 @@ class LoadFavoriteView(generics.GenericAPIView):
     )
     def delete(self, request: Request, pk: int, *args: Any, **kwargs: Any) -> Response:
         load = get_object_or_404(Load, pk=pk)
+        if load.status == Load.Status.DRAFT and load.shipper_id != request.user.id:
+            raise Http404("Load not found.")
         remove_favorite(request.user, load)
         return Response(status=status.HTTP_204_NO_CONTENT)
