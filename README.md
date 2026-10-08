@@ -95,11 +95,22 @@ flowchart LR
 | `make logs` | `docker compose logs -f` | Tail logs for all containers |
 | `make migrate` | `docker compose exec web python manage.py migrate` | Run database migrations |
 | `make makemigrations` | `docker compose exec web python manage.py makemigrations` | Create new database migration files |
+| `make references` | `docker compose exec web python manage.py load_references` | Load reference data idempotently |
 | `make seed` | `docker compose exec web python manage.py seed_demo` | Load demo seed data |
 | `make test` | `docker compose exec web pytest -q` | Run tests with pytest inside web container |
 | `make lint` | `docker compose exec web ruff check .` | Run ruff linter inside web container |
 | `make shell` | `docker compose exec web python manage.py shell` | Open Django interactive shell |
 | `make schema` | `docker compose exec web python manage.py spectacular --validate --fail-on-warn --file schema.yml` | Validate and dump OpenAPI schema |
+
+## Reference Data
+
+The platform relies on core reference data loaded from JSON fixtures:
+- **Countries**: ISO 2-letter codes, localized names (`uz`, `ru`, `en`), and flag URLs.
+- **Currencies**: Supported transaction currencies (`UZS`, `USD`, `EUR`, `RUB`, `KZT`, `AED`).
+- **Vehicle Types**: Tractor and trailer body and vehicle classifications identified by unique `code`.
+- **Exchange Rates**: Indicative placeholder currency conversion rates, managed by administrators in Django admin.
+
+Reference data is loaded automatically on container start when migrations run, and can also be triggered via `make references` (or `python manage.py load_references`). The command is idempotent and never overwrites administrator edits. To refresh existing rows back to fixture defaults, use the `--force` flag (`python manage.py load_references --force`). Reference caches are invalidated automatically after loading.
 
 ## Local Development (Non-Docker)
 
